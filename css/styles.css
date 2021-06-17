@@ -11,14 +11,11 @@ div {
 
 .navbar {
     display: flex;
-    background-color: turquoise;
-    color: #F5F3F1;
     margin: 0
 }
 
 .navbar-left {
-    flex-grow: 1;
-    background-color: grey;
+    flex-grow: 1;;
     display: flex;
 }
 
@@ -26,16 +23,14 @@ div {
     font-size: 1.5rem;
     justify-content: center;
     align-items: center;
-    color: #F5F3F1;
+    color: #393939;
     text-decoration: none;
     margin: 0;
 }
 
 a {
     text-decoration: none;
-    color: #F5F3F1;
-}
-
+    color: #393939;
 }
 
 .fa-chevron-down {
@@ -45,34 +40,60 @@ a {
 .box-1 {
     flex-grow: 1;
     display: flex;
-    background-color: #F5F3F1;
+    background-color: #74BD15;
+    border-right: solid #F5F3F1;
 }
 
 .box-1 a {
-    color: #74BD15;
+    color: #F5F3F1;
 }
 
 .box-2 {
     flex-grow: 1;
     display: flex;
+    background-color: #e4e4e4;
+    border-right: solid #F5F3F1;
+}
+
+.box-2:hover {
     background-color: #268E9D;
+}
+
+.box-2:hover > a {
+    color: #F5F3F1;
 }
 
 .box-3 {
     flex-grow: 1;
     display: flex;
+    background-color: #e4e4e4;
+    border-right: solid #F5F3F1;
+}
+
+.box-3:hover {
     background-color: #803767;
+}
+
+.box-3:hover > a {
+    color: #F5F3F1;
 }
 
 .navbar-user {
     flex-basis: 48px;
-    background-color: #F8AA10;
+    background-color: #e4e4e4;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
 .user-icon {
     font-size: 2rem;
+}
+
+.navbar-user:hover {
+    background-color: #F8AA10;
+}
+
+.navbar-user:hover > a {
+        color: #F5F3F1;
 }
