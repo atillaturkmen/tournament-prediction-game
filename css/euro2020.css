@@ -42,24 +42,24 @@ body {
     font-size: 1.25rem;
 }
 
-.navbar-left .puan-durumu {
-    background-color: #74BD15;
+.puan-durumu {
     border-right: solid #F5F3F1;
 }
 
-.puan-durumu a {
+.puan-durumu:hover {
+    background-color: #74BD15;
+}
+
+.puan-durumu:hover > a {
     color: #F5F3F1;
 }
 
-.euro2020 {
+.navbar-left .euro2020 {
+    background-color: #268E9D;
     border-right: solid #F5F3F1;
 }
 
-.euro2020:hover {
-    background-color: #268E9D;
-}
-
-.euro2020:hover > a {
+.euro2020 a {
     color: #F5F3F1;
 }
 

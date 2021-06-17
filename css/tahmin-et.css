@@ -42,12 +42,15 @@ body {
     font-size: 1.25rem;
 }
 
-.navbar-left .puan-durumu {
-    background-color: #74BD15;
+.puan-durumu {
     border-right: solid #F5F3F1;
 }
 
-.puan-durumu a {
+.puan-durumu:hover {
+    background-color: #74BD15;
+}
+
+.puan-durumu:hover > a {
     color: #F5F3F1;
 }
 
@@ -63,15 +66,12 @@ body {
     color: #F5F3F1;
 }
 
-.tahmin-et {
+.navbar-left .tahmin-et {
+    background-color: #803767;
     border-right: solid #F5F3F1;
 }
 
-.tahmin-et:hover {
-    background-color: #803767;
-}
-
-.tahmin-et:hover > a {
+.tahmin-et a {
     color: #F5F3F1;
 }
 

@@ -42,12 +42,15 @@ body {
     font-size: 1.25rem;
 }
 
-.navbar-left .puan-durumu {
-    background-color: #74BD15;
+.puan-durumu {
     border-right: solid #F5F3F1;
 }
 
-.puan-durumu a {
+.puan-durumu:hover {
+    background-color: #74BD15;
+}
+
+.puan-durumu:hover > a {
     color: #F5F3F1;
 }
 
@@ -75,18 +78,12 @@ body {
     color: #F5F3F1;
 }
 
-.navbar-user {
+.navbar .navbar-user {
     flex-basis: 48px;
+    background-color: #F8AA10;
 }
 
 .navbar-user .fa-user-circle {
     font-size: 2rem;
-}
-
-.navbar-user:hover {
-    background-color: #F8AA10;
-}
-
-.navbar-user:hover > a {
-        color: #F5F3F1;
+    color: #F5F3F1;
 }
