@@ -1,0 +1,25 @@
+{
+  "name": "tournament-prediction-game",
+  "version": "1.0.0",
+  "description": "A site where you guess match scores",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atillaturkmen/tournament-prediction-game.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Atilla, Yusuf, Arda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atillaturkmen/tournament-prediction-game/issues"
+  },
+  "homepage": "https://github.com/atillaturkmen/tournament-prediction-game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
