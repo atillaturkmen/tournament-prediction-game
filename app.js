@@ -5,6 +5,8 @@ const routes = require(path.join(__dirname, "routes", "index")); // look at inde
 
 const app = express(); // create express app
 
+app.set("view engine", "ejs"); // use ejs as view engine
+
 app.use('/public', express.static(path.join(__dirname ,'public'))); // declare public folder
 
 // Start listening to given port
