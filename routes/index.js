@@ -2,9 +2,14 @@ const express = require("express"); // import express
 
 const router = express.Router();
 
+// let db_utils = require("../db/db-utils");
+
 // Render home page ejs for root page
-router.get("/", (req, res) => {
-    res.render("home");
+router.get("/", async (req, res) => {
+    // let topTen = await db_utils.getTopTen(); you can wait for data from db like so
+    res.render("home", {
+        topTen: topTen, // and send it to ejs like this
+    });
 });
 
 // Handle these routes in relevant js files
