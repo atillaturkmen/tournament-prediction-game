@@ -1,7 +1,6 @@
 const express = require("express"); // import express
 const path = require("path"); // import path
-
-const routes = require(path.join(__dirname, "routes", "index")); // look at index.js file in routes folder
+require('dotenv').config(); // read environment variables from .env
 
 const app = express(); // create express app
 
@@ -15,6 +14,7 @@ const server = app.listen(80, () => {
 });
 
 // Let routes folder handle every get and post request
+const routes = require(path.join(__dirname, "routes", "index")); // look at index.js file in routes folder
 app.get("*", routes);
 app.post("*", routes);
 
