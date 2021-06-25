@@ -1,5 +1,5 @@
 // These two have to be in all router files
-const express = require("./imports").express;
+const express = require("express"); // import express
 const router = express.Router();
 
 router.get("/tahmin-et", (req, res) => {
