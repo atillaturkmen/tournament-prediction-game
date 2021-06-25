@@ -6,9 +6,9 @@ const router = express.Router();
 
 // Render home page ejs for root page
 router.get("/", async (req, res) => {
-    // let topTen = await db_utils.getTopTen(); you can wait for data from db like so
+    // let topTen = await db_utils.getTopTen(); // you can wait for data from db like so
     res.render("home", {
-        topTen: topTen, // and send it to ejs like this
+        // topTen: topTen, // and send it to ejs like this
     });
 });
 

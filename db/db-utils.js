@@ -1,14 +1,14 @@
 const database = require("./initialize-db");
 
-// You give your SQL query and parameters to this function and get a promise that returns rows
-function query (sql, params=[]) {
+// You give your SQL query and parameters to this function and get a promise that returns rows array
+function query(sql, params = []) {
     return new Promise(function (resolve, reject) {
-      database.all(sql, params, function (error, rows) {
-        if (error)
-          reject(error);
-        else
-          resolve({ rows: rows });
-      });
+        database.all(sql, params, function (error, rows) {
+            if (error)
+                reject(error);
+            else
+                resolve(rows);
+        });
     });
 }
 
