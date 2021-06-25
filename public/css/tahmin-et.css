@@ -90,3 +90,44 @@ body {
 .navbar-user:hover > a {
         color: #F5F3F1;
 }
+
+.tiny-navbar {
+    display: none;
+}
+
+@media (max-width: 650px) {
+  
+    .navbar {
+        display: none;
+    }
+
+    .tiny-navbar {
+        display: flex;
+        background-color: #e4e4e4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #393939;
+        margin: 0;
+        height: 48px;
+    }
+
+    .tiny-navbar-left {
+        display: flex;
+        flex-grow: 1;
+    }
+
+    .tiny-navbar-menu {
+        display: flex;
+        flex-basis: 48px;
+        justify-content: center;
+        align-items: center;
+        height: 48px;
+        width: 48px;
+    }
+
+    .tiny-navbar-menu .fa-bars {
+        font-size: 2rem;
+        color: #393939
+    }
+}

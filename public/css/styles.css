@@ -1,11 +1,11 @@
 
-/* navbar */
-
 body {
     font-family: Roboto Slab;
     margin: 0;
     background-color: #F5F3F1;
 }
+
+/* navbar */
 
 .navbar {
     display: flex;
@@ -90,3 +90,197 @@ body {
 .navbar-user:hover > a {
         color: #F5F3F1;
 }
+
+.tiny-navbar {
+    display: none;
+}
+
+@media (max-width: 650px) {
+  
+    .navbar {
+        display: none;
+    }
+
+    .tiny-navbar {
+        display: flex;
+        background-color: #e4e4e4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #393939;
+        margin: 0;
+        height: 48px;
+    }
+
+    .tiny-navbar-left {
+        display: flex;
+        flex-grow: 1;
+    }
+
+    .tiny-navbar-menu {
+        display: flex;
+        flex-basis: 48px;
+        justify-content: center;
+        align-items: center;
+        height: 48px;
+        width: 48px;
+    }
+
+    .tiny-navbar-menu .fa-bars {
+        font-size: 2rem;
+        color: #393939
+    }
+}
+/* navbar-end */
+
+
+/* tiny-leaderboard */
+.tiny-leaderboard {
+    display: none;
+    border-collapse: collapse;
+    margin: 50px auto;
+    font-size: 1rem;
+    min-width: 100%;
+}
+
+.tiny-leaderboard thead tr {
+    background-color: #F5F3F1;
+    color: #393939;
+    text-align: center;
+    border-bottom: 2px solid #878787;
+  }
+  .tiny-leaderboard th {
+    font-weight: normal;
+  }
+
+  .tiny-leaderboard th:last-of-type {
+    font-weight: bold;
+  }
+
+  .tiny-leaderboard th,
+  .tiny-leaderboard td {
+    padding: 12px 15px;
+  }
+  
+  .tiny-leaderboard tbody tr {
+    border-bottom: 1px solid #878787;
+    text-align: center;
+    color: #393939;
+  }
+
+  .tiny-leaderboard tbody tr .username-column {
+      text-align: left;
+      font-weight: bold;
+  }
+
+  .tiny-leaderboard tbody tr .username-column a {
+      text-decoration: none;
+      color: #393939;
+  }
+
+  .tiny-leaderboard tbody tr .username-column a:hover {
+    text-decoration: none;
+    color: #74BD15;
+}
+
+
+  .tiny-leaderboard tbody tr .points-column {
+    font-weight: bold;
+  }
+  
+  .tiny-leaderboard tbody tr:nth-of-type(even) {
+    background-color: #e4e4e4;
+  }
+  
+  .tiny-leaderboard tbody tr:last-of-type {
+    border-bottom: 2px solid #878787;
+  }
+/* tiny-leaderboard-end */
+
+/* leaderboard */
+.leaderboard {
+    border-collapse: collapse;
+    margin: 100px auto;
+    font-size: 1.25rem;
+    min-width: 1200px;
+  }
+
+  @media (max-width: 1200px) {
+      .leaderboard {
+        min-width: 100%;
+        margin: 50px auto;
+      }
+  }
+  
+  @media (max-width: 650px) {
+    .leaderboard {
+        font-size: 1rem;
+    }
+}
+
+    @media (max-width: 359px) {
+      
+        .leaderboard {
+           display: none;
+       }
+
+        .tiny-leaderboard {
+            display: table;
+            min-width: 100%;
+        }
+  }
+
+  .leaderboard thead tr {
+    background-color: #F5F3F1;
+    color: #393939;
+    text-align: center;
+    border-bottom: 2px solid #878787;
+  }
+  
+  .leaderboard th {
+    font-weight: normal;
+  }
+
+  .leaderboard th:last-of-type {
+    font-weight: bold;
+  }
+
+  .leaderboard th,
+  .leaderboard td {
+    padding: 12px 15px;
+  }
+  
+  .leaderboard tbody tr {
+    border-bottom: 1px solid #878787;
+    text-align: center;
+    color: #393939;
+  }
+
+  .leaderboard tbody tr .username-column {
+      text-align: left;
+      font-weight: bold;
+  }
+
+  .leaderboard tbody tr .username-column a {
+      text-decoration: none;
+      color: #393939;
+  }
+
+  .leaderboard tbody tr .username-column a:hover {
+    text-decoration: none;
+    color: #74BD15;
+}
+
+
+  .leaderboard tbody tr .points-column {
+    font-weight: bold;
+  }
+  
+  .leaderboard tbody tr:nth-of-type(even) {
+    background-color: #e4e4e4;
+  }
+  
+  .leaderboard tbody tr:last-of-type {
+    border-bottom: 2px solid #878787;
+  }
+  /* leaderboard-end */
