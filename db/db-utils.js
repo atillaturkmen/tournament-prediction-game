@@ -21,3 +21,21 @@ exports.createUser = function (username, pass) {
 exports.getTopTen = function () {
     return query("SELECT username, points FROM user ORDER BY points DESC LIMIT 10;");
 };
+
+// Returns point of a user by username
+exports.getPoint = async function (username) {
+    let result = await query("SELECT points FROM user WHERE username=?;", [username]);
+    return result[0].points;
+};
+
+// Returns true if username exists
+exports.usernameExists = async function (username) {
+    let result = await query("SELECT * FROM user WHERE username=?;", [username]);
+    return result.length != 0;
+};
+
+// Returns point of a user by username
+exports.getPassword = async function (username) {
+    let result = await query("SELECT password FROM user WHERE username=?;", [username]);
+    return result[0].password;
+};

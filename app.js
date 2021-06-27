@@ -1,5 +1,7 @@
-const express = require("express"); // import express
-const path = require("path"); // import path
+const express = require("express"); // framework for nodejs
+const path = require("path"); // useful for joining file paths
+const session = require('express-session'); // keeps sessions
+const MemoryStore = require('memorystore')(session); // default store leaks memory
 require('dotenv').config(); // read environment variables from .env
 
 const app = express(); // create express app
@@ -7,6 +9,22 @@ const app = express(); // create express app
 app.set("view engine", "ejs"); // use ejs as view engine
 
 app.use('/public', express.static(path.join(__dirname, 'public'))); // declare public folder
+
+app.use(express.urlencoded({
+    extended: false
+}));
+
+// initialize session values
+app.use(session({
+    // use memory store, default store leaks memory
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: process.env.secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 86400000 * 30 } // cookies expire after 30 days, users has to login every month
+}));
 
 // Start listening to given port
 const server = app.listen(80, () => {

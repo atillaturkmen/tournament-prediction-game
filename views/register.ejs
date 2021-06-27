@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('header'); -%>
+
+<head>
+	<title>Register</title>
+	<link rel="stylesheet" href="/public/css/register-form.css">
+</head>
+
+<body>
+	<%- include('navbar'); -%>
+	<div class="login-form text-center">
+		<h1>Register Form</h1>
+		<form action="/account/signup" method="POST">
+			<input type="text" name="username" placeholder="Username" autocomplete="off" required>
+			<input type="password" name="password" placeholder="Password" autocomplete="off" required>
+			<button type="submit">Register</button>
+		</form>
+	</div>
+</body>
+
+</html>
