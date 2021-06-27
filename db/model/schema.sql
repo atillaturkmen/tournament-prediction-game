@@ -1,5 +1,22 @@
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS "account" (
+CREATE TABLE IF NOT EXISTS "match" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"home_team"	TEXT NOT NULL,
+	"away_team"	TEXT NOT NULL,
+	"time"	TEXT,
+	"home_goals"	INTEGER,
+	"away_goals"	INTEGER,
+	"in_tournament"	TEXT,
+	FOREIGN KEY("in_tournament") REFERENCES "tournament"("name"),
+	FOREIGN KEY("home_team") REFERENCES "team"("name"),
+	FOREIGN KEY("away_team") REFERENCES "team"("name")
+);
+CREATE TABLE IF NOT EXISTS "team" (
+	"name"	TEXT NOT NULL,
+	"logo"	BLOB,
+	PRIMARY KEY("name")
+);
+CREATE TABLE IF NOT EXISTS "user" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"username"	TEXT NOT NULL UNIQUE,
 	"password"	TEXT NOT NULL,
@@ -11,7 +28,7 @@ CREATE TABLE IF NOT EXISTS "champion_guess" (
 	"champion"	TEXT NOT NULL,
 	FOREIGN KEY("tournament_name") REFERENCES "tournament"("name"),
 	PRIMARY KEY("tournament_name","user_id"),
-	FOREIGN KEY("user_id") REFERENCES "account"("id")
+	FOREIGN KEY("user_id") REFERENCES "user"("id")
 );
 CREATE TABLE IF NOT EXISTS "top_scorer_guess" (
 	"tournament_name"	TEXT NOT NULL,
@@ -19,7 +36,7 @@ CREATE TABLE IF NOT EXISTS "top_scorer_guess" (
 	"top_scorer"	TEXT NOT NULL,
 	PRIMARY KEY("tournament_name","user_id"),
 	FOREIGN KEY("tournament_name") REFERENCES "tournament"("name"),
-	FOREIGN KEY("user_id") REFERENCES "account"("id")
+	FOREIGN KEY("user_id") REFERENCES "user"("id")
 );
 CREATE TABLE IF NOT EXISTS "score_guess" (
 	"match_id"	TEXT NOT NULL,
@@ -28,16 +45,7 @@ CREATE TABLE IF NOT EXISTS "score_guess" (
 	"away_goals"	INTEGER NOT NULL,
 	FOREIGN KEY("match_id") REFERENCES "match"("id"),
 	PRIMARY KEY("match_id","user_id"),
-	FOREIGN KEY("user_id") REFERENCES "account"("id")
-);
-CREATE TABLE IF NOT EXISTS "match" (
-	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-	"name"	TEXT NOT NULL,
-	"time"	TEXT NOT NULL,
-	"home_goals"	INTEGER,
-	"away_goals"	INTEGER,
-	"in_tournament"	TEXT,
-	FOREIGN KEY("in_tournament") REFERENCES "tournament"("name")
+	FOREIGN KEY("user_id") REFERENCES "user"("id")
 );
 CREATE TABLE IF NOT EXISTS "tournament" (
 	"name"	TEXT NOT NULL UNIQUE,

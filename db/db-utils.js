@@ -12,12 +12,12 @@ function query(sql, params = []) {
     });
 }
 
-// Creates a user in accounts table with given username and password
+// Creates a user in user table with given username and password
 exports.createUser = function (username, pass) {
-    return query("INSERT INTO account (username, password) VALUES (?, ?);", [username, pass]);
+    return query("INSERT INTO user (username, password) VALUES (?, ?);", [username, pass]);
 };
 
 // Returns users by descending score, max 10 people
 exports.getTopTen = function () {
-    return query("SELECT username, points FROM account ORDER BY points DESC LIMIT 10;");
+    return query("SELECT username, points FROM user ORDER BY points DESC LIMIT 10;");
 };
