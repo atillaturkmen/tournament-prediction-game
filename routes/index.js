@@ -2,7 +2,7 @@ const express = require("express"); // import express
 
 const router = express.Router();
 
-let db_utils = require("../db/db-utils");
+const db_utils = require("../db/db-utils");
 
 // Render home page ejs for root page
 router.get("/", async (req, res) => {

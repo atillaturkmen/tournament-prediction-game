@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('../header'); -%>
+
+<head>
+	<link rel="stylesheet" href="/public/css/register-form.css">
+</head>
+
+<body>
+	<%- include('../navbar'); -%>
+	<br>
+	<div class="login-form text-center">
+		<h1>Add Another Admin</h1>
+		<form action="/admin/add" method="POST">
+			<input type="text" name="new_admin" placeholder="Admin to be added" required>
+			<input type="password" name="password" placeholder="Your Password" required>
+			<button type="submit">Add</button>
+			<a href="/admin" style="float:right">Go back to admin panel</a>
+		</form>
+		<br>
+	</div>
+</body>
+
+</html>

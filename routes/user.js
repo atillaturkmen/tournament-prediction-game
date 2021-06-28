@@ -2,7 +2,7 @@
 const express = require("express"); // import express
 const router = express.Router();
 
-let db_utils = require("../db/db-utils"); // you can import our database utility functions like so
+const db_utils = require("../db/db-utils"); // you can import our database utility functions like so
 
 router.get("/user", async (req, res) => {
     // Render login page if user is not logged in
