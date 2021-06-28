@@ -76,7 +76,7 @@ router.post("/account/auth", async (req, res) => {
         res.render("message", { message: "This username does not exist." });
     } else {
         // Compare passwords with the one in db
-        await checkPass(username_input, password_input);
+        if (await wrongPass(username_input, password_input, res)) return;
         // Login if passwords match
         login(req, res, username_input);
     }
@@ -90,7 +90,7 @@ router.post("/account/change_username", async (req, res) => {
         res.redirect("/account/login");
     } else {
         // Compare passwords with the one in db
-        await checkPass(req.session.username, password_input);
+        if (await wrongPass(req.session.username, password_input, res)) return;
         // Change username if passwords match
         await db_utils.changeUserName(new_username, req.session.username);
         req.session.username = new_username;
@@ -109,7 +109,7 @@ router.post("/account/change_password", async (req, res) => {
         res.render("message", { message: "Passwords don't match!" });
     } else {
         // Compare passwords with the one in db
-        await checkPass(req.session.username, old_password);
+        if (await wrongPass(req.session.username, old_password, res)) return;
         // Hash the new password and put it into db
         let hashedPassword = await hashPassword(new_password);
         await db_utils.changePassword(hashedPassword, req.session.username);
@@ -124,13 +124,14 @@ function login(req, res, username) {
     res.redirect("/user");
 }
 
-/** Compare passwords with the one in db, redirect to wrong password page if it doesn't match*/
-async function checkPass(username, pass, res) {
+/** Compare passwords with the one in db, return true and redirect to wrong password page if it doesn't match*/
+async function wrongPass(username, pass, res) {
     let password = await db_utils.getPassword(username);
     let pass_check = await bcrypt.compare(pass, password);
     if (!pass_check) {
         res.render("message", { message: "Wrong password" });
     }
+    return !pass_check;
 }
 
 /** Hash the password */
