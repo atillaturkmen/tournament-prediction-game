@@ -13,8 +13,19 @@ router.get("/user", async (req, res) => {
         res.render("user", {
             username: req.session.username,
             points: points,
+            self: true,
         });
     }
+});
+
+router.get("/user/:username", async (req, res) => {
+    let username = req.params.username;
+    let points = await db_utils.getPoint(username);
+    res.render("user", {
+        username: username,
+        points: points,
+        self: req.session.username === username,
+    });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files

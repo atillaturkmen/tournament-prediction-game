@@ -5,5 +5,27 @@
 
 <body>
     <%- include('navbar'); -%>
-    <p>Bu şekilde include diyerek her sayfaya kopyala yapıştır yapmaya gerek kalmıyor.</p>
+    <div style="text-align: center;">
+        <br>
+        <h2>Top Guessers</h2>
+        <br>
+        <table style="width:100%;">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Points</th>
+                </tr>
+            </thead>
+            <% for (var i = 0; i < topTen.length; i++) { %>
+            <tr>
+                <td><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
+                <td><%= topTen[i].points %></td>
+            </tr>
+            <% } %>
+        </table>
+        <br>
+        <br>
+    </div>
 </body>
+
+</html>

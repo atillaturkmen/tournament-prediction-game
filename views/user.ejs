@@ -8,10 +8,12 @@
     <div style="text-align: center;">
         <p><%= username %> has <%= points %> points.</p>
         <br>
+        <% if(self) { %>
         <a href="/account/logout">Logout</a>
         <br>
         <a href="/account/change_username">Change username</a>
         <br>
         <a href="/account/change_password">Change password</a>
+        <% } %>
     </div>
 </body>

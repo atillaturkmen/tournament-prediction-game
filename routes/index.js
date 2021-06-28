@@ -2,13 +2,13 @@ const express = require("express"); // import express
 
 const router = express.Router();
 
-// let db_utils = require("../db/db-utils");
+let db_utils = require("../db/db-utils");
 
 // Render home page ejs for root page
 router.get("/", async (req, res) => {
-    // let topTen = await db_utils.getTopTen(); // you can wait for data from db like so
+    let topTen = await db_utils.getTopTen(); // you can wait for data from db like so
     res.render("home", {
-        // topTen: topTen, // and send it to ejs like this
+        topTen: topTen, // and send it to ejs like this
     });
 });
 
@@ -16,6 +16,8 @@ router.get("/", async (req, res) => {
 const user = require("./user");
 router.get("/user", user);
 router.post("/user", user);
+router.get("/user/*", user);
+router.post("/user/*", user);
 
 const euro2020 = require("./euro2020");
 router.get("/euro2020", euro2020);
