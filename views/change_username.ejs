@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('header'); -%>
+
+<head>
+    <title>Change Username</title>
+    <link rel="stylesheet" href="/public/css/register-form.css">
+</head>
+
+<body>
+    <%- include('navbar'); -%>
+    <br>
+    <form action="/account/change_username" method="POST" class="login-form text-center">
+        <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+        <input type="text" name="new_username" placeholder="New Username" autocomplete="off" required>
+        <button type="submit" class="text-center">Change username</button>
+    </form>
+</body>
+
+</html>

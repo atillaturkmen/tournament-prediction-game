@@ -28,12 +28,26 @@ router.get("/account/logout", async (req, res) => {
     res.redirect("/");
 });
 
+router.get("/account/change_username", async (req, res) => {
+    if (req.session.loggedin) {
+        res.render("change_username");
+    } else {
+        res.redirect("/account/login");
+    }
+});
+
+router.get("/account/change_password", async (req, res) => {
+    if (req.session.loggedin) {
+        res.render("change_password");
+    } else {
+        res.redirect("/account/login");
+    }
+});
+
+// Creates user
 router.post("/account/signup", async (req, res) => {
     let username_input = req.body.username;
     let password_input = req.body.password;
-    // Hash the password
-    let salt = await bcrypt.genSalt();
-    let hashedPassword = await bcrypt.hash(password_input, salt);
     // Check the db if username exists
     let usernameExists = await db_utils.usernameExists(username_input);
     if (usernameExists) {
@@ -41,6 +55,10 @@ router.post("/account/signup", async (req, res) => {
             message: "This username is taken, try again.",
         });
     } else {
+        // Hash the password
+        let salt = await bcrypt.genSalt();
+        let hashedPassword = await bcrypt.hash(password_input, salt);
+        // Create and login
         await db_utils.createUser(username_input, hashedPassword);
         req.session.loggedin = true;
         req.session.username = username_input;
@@ -48,6 +66,7 @@ router.post("/account/signup", async (req, res) => {
     }
 });
 
+// Handles login
 router.post("/account/auth", async (req, res) => {
     let username_input = req.body.username;
     let password_input = req.body.password;
@@ -69,6 +88,59 @@ router.post("/account/auth", async (req, res) => {
         } else {
             res.render("message", {
                 message: "Wrong password!",
+            });
+        }
+    }
+});
+
+router.post("/account/change_username", async (req, res) => {
+    let new_username = req.body.new_username;
+    let password_input = req.body.password;
+
+    if (!req.session.loggedin) {
+        res.redirect("/account/login");
+    } else {
+        // Compare passwords with the one in db
+        let password = await db_utils.getPassword(req.session.username);
+        let pass_check = await bcrypt.compare(password_input, password);
+        if (!pass_check) {
+            res.render("message", {
+                message: "Wrong password",
+            });
+        } else {
+            await db_utils.changeUserName(new_username, req.session.username);
+            req.session.username = new_username;
+            res.redirect("/user");
+        }
+    }
+});
+
+router.post("/account/change_password", async (req, res) => {
+    let old_password = req.body.old_password;
+    let new_password = req.body.new_password;
+    let confirm_new_password = req.body.confirm_new_password;
+
+    if (!req.session.loggedin) {
+        res.redirect("/account/login");
+    } else if (confirm_new_password != new_password) {
+        res.render("message", {
+            message: "Passwords don't match!",
+        });
+    } else {
+        // Compare passwords with the one in db
+        let password = await db_utils.getPassword(req.session.username);
+        let pass_check = await bcrypt.compare(old_password, password);
+        if (!pass_check) {
+            res.render("message", {
+                message: "Wrong password",
+            });
+        } else {
+            // Hash the password
+            let salt = await bcrypt.genSalt();
+            let hashedPassword = await bcrypt.hash(new_password, salt);
+            await db_utils.changePassword(hashedPassword, req.session.username);
+            res.render("message", {
+                message: "Password changed successfully.",
             });
         }
     }
