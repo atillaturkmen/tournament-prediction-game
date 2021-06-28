@@ -5,25 +5,22 @@
 
 <body>
     <%- include('navbar'); -%>
-    <div style="text-align: center;">
-        <br>
-        <h2>Top Guessers</h2>
-        <br>
-        <table style="width:100%;">
+    <div class="leaderboard-div" style="text-align: center;">
+        <table class="leaderboard">
             <thead>
                 <tr>
                     <th scope="col">Username</th>
-                    <th scope="col">Points</th>
-                    <th scope="col">Correct Winner Guesses</th>
                     <th scope="col">Correct Score Guesses</th>
+                    <th scope="col">Correct Winner Guesses</th>
+                    <th scope="col">Points</th>
                 </tr>
             </thead>
             <% for (var i = 0; i < topTen.length; i++) { %>
             <tr>
                 <td><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
-                <td><%= topTen[i].points %></td>
-                <td><%= topTen[i].correct_winner_guesses %></td>
                 <td><%= topTen[i].correct_score_guesses %></td>
+                <td><%= topTen[i].correct_winner_guesses %></td>
+                <td><%= topTen[i].points%></td>
             </tr>
             <% } %>
         </table>
