@@ -9,4 +9,4 @@ exports.wrongPass = async function (username, pass, res) {
         res.render("message", { message: "Wrong password" });
     }
     return !pass_check;
-}
+};
