@@ -5,6 +5,8 @@ const router = express.Router();
 
 let db_utils = require("../db/db-utils"); // you can import our database utility functions like so
 
+// ---------- GET request handlers -----------
+
 router.get("/account/login", async (req, res) => {
     // Redirect to user page if user is loggedin
     if (req.session.loggedin) {
@@ -44,6 +46,8 @@ router.get("/account/change_password", async (req, res) => {
     }
 });
 
+// ---------- POST request handlers -----------
+
 // Creates user
 router.post("/account/signup", async (req, res) => {
     let username_input = req.body.username;
@@ -54,13 +58,10 @@ router.post("/account/signup", async (req, res) => {
         res.render("message", { message: "This username is taken, try again." });
     } else {
         // Hash the password
-        let salt = await bcrypt.genSalt();
-        let hashedPassword = await bcrypt.hash(password_input, salt);
+        let hashedPassword = await hashPassword(password_input);
         // Create and login
         await db_utils.createUser(username_input, hashedPassword);
-        req.session.loggedin = true;
-        req.session.username = username_input;
-        res.redirect("/user");
+        login(req, res, username_input);
     }
 });
 
@@ -75,15 +76,9 @@ router.post("/account/auth", async (req, res) => {
         res.render("message", { message: "This username does not exist." });
     } else {
         // Compare passwords with the one in db
-        let password = await db_utils.getPassword(username_input);
-        let pass_check = await bcrypt.compare(password_input, password);
-        if (pass_check) {
-            req.session.loggedin = true;
-            req.session.username = username_input;
-            res.redirect("/user");
-        } else {
-            res.render("message", { message: "Wrong password!" });
-        }
+        await checkPass(username_input, password_input);
+        // Login if passwords match
+        login(req, res, username_input);
     }
 });
 
@@ -95,15 +90,11 @@ router.post("/account/change_username", async (req, res) => {
         res.redirect("/account/login");
     } else {
         // Compare passwords with the one in db
-        let password = await db_utils.getPassword(req.session.username);
-        let pass_check = await bcrypt.compare(password_input, password);
-        if (!pass_check) {
-            res.render("message", { message: "Wrong password" });
-        } else {
-            await db_utils.changeUserName(new_username, req.session.username);
-            req.session.username = new_username;
-            res.redirect("/user");
-        }
+        await checkPass(req.session.username, password_input);
+        // Change username if passwords match
+        await db_utils.changeUserName(new_username, req.session.username);
+        req.session.username = new_username;
+        res.redirect("/user");
     }
 });
 
@@ -118,18 +109,34 @@ router.post("/account/change_password", async (req, res) => {
         res.render("message", { message: "Passwords don't match!" });
     } else {
         // Compare passwords with the one in db
-        let password = await db_utils.getPassword(req.session.username);
-        let pass_check = await bcrypt.compare(old_password, password);
-        if (!pass_check) {
-            res.render("message", { message: "Wrong password" });
-        } else {
-            // Hash the password
-            let salt = await bcrypt.genSalt();
-            let hashedPassword = await bcrypt.hash(new_password, salt);
-            await db_utils.changePassword(hashedPassword, req.session.username);
-            res.render("message", { message: "Password changed successfully." });
-        }
+        await checkPass(req.session.username, old_password);
+        // Hash the new password and put it into db
+        let hashedPassword = await hashPassword(new_password);
+        await db_utils.changePassword(hashedPassword, req.session.username);
+        res.render("message", { message: "Password changed successfully." });
     }
 });
+
+/** User is logged in */
+function login(req, res, username) {
+    req.session.loggedin = true;
+    req.session.username = username;
+    res.redirect("/user");
+}
+
+/** Compare passwords with the one in db, redirect to wrong password page if it doesn't match*/
+async function checkPass(username, pass, res) {
+    let password = await db_utils.getPassword(username);
+    let pass_check = await bcrypt.compare(pass, password);
+    if (!pass_check) {
+        res.render("message", { message: "Wrong password" });
+    }
+}
+
+/** Hash the password */
+async function hashPassword(pass) {
+    let salt = await bcrypt.genSalt();
+    return await bcrypt.hash(pass, salt);
+}
 
 module.exports = router; // this line is needed for importing, necessary for all router files
