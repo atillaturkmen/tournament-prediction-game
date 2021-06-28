@@ -31,5 +31,11 @@ const account = require("./account");
 router.get("/account/*", account);
 router.post("/account/*", account);
 
+const admin = require("./admin");
+router.get("/admin", admin);
+router.post("/admin", admin);
+router.get("/admin/*", admin);
+router.post("/admin/*", admin);
+
 // Make this js module available for import (at index.js in the root)
 module.exports = router;

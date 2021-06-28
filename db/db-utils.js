@@ -49,3 +49,9 @@ exports.changeUserName = function (newUsername, oldUsername) {
 exports.changePassword = function (newPass, username) {
     return query("UPDATE user SET password = ? WHERE username = ?", [newPass, username]);
 };
+
+// Returns true if given user is admin
+exports.isAdmin = async function (username) {
+    let result = await query("SELECT * FROM admin INNER JOIN user ON user.id = admin.user_id WHERE user.username = ?", [username]);
+    return result.length != 0;
+};
