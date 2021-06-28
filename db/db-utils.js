@@ -19,7 +19,7 @@ exports.createUser = function (username, pass) {
 
 // Returns users by descending score, max 10 people
 exports.getTopTen = function () {
-    return query("SELECT username, points FROM user ORDER BY points DESC LIMIT 10;");
+    return query("SELECT username, points, correct_winner_guesses, correct_score_guesses FROM user ORDER BY points DESC LIMIT 10;");
 };
 
 // Returns point of a user by username
