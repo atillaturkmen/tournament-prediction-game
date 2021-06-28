@@ -1,11 +1,24 @@
 BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "score_guess" (
+	"match_id"	TEXT NOT NULL,
+	"user_id"	TEXT NOT NULL,
+	"home_goals_first_half"	INTEGER,
+	"home_goals_full_time"	INTEGER NOT NULL,
+	"away_goals_first_half"	INTEGER,
+	"away_goals_full_time"	INTEGER NOT NULL,
+	FOREIGN KEY("match_id") REFERENCES "match"("id"),
+	PRIMARY KEY("match_id","user_id"),
+	FOREIGN KEY("user_id") REFERENCES "user"("id")
+);
 CREATE TABLE IF NOT EXISTS "match" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"home_team"	TEXT NOT NULL,
 	"away_team"	TEXT NOT NULL,
 	"time"	TEXT,
-	"home_goals"	INTEGER,
-	"away_goals"	INTEGER,
+	"home_goals_first_half"	INTEGER,
+	"home_goals_full_time"	INTEGER,
+	"away_goals_first_half"	INTEGER,
+	"away_goals_full_time"	INTEGER,
 	"in_tournament"	TEXT,
 	FOREIGN KEY("in_tournament") REFERENCES "tournament"("name"),
 	FOREIGN KEY("home_team") REFERENCES "team"("name"),
@@ -36,15 +49,6 @@ CREATE TABLE IF NOT EXISTS "top_scorer_guess" (
 	"top_scorer"	TEXT NOT NULL,
 	PRIMARY KEY("tournament_name","user_id"),
 	FOREIGN KEY("tournament_name") REFERENCES "tournament"("name"),
-	FOREIGN KEY("user_id") REFERENCES "user"("id")
-);
-CREATE TABLE IF NOT EXISTS "score_guess" (
-	"match_id"	TEXT NOT NULL,
-	"user_id"	TEXT NOT NULL,
-	"home_goals"	INTEGER NOT NULL,
-	"away_goals"	INTEGER NOT NULL,
-	FOREIGN KEY("match_id") REFERENCES "match"("id"),
-	PRIMARY KEY("match_id","user_id"),
 	FOREIGN KEY("user_id") REFERENCES "user"("id")
 );
 CREATE TABLE IF NOT EXISTS "tournament" (
