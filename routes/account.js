@@ -10,7 +10,7 @@ router.get("/account/login", async (req, res) => {
     if (req.session.loggedin) {
         res.redirect("/user");
     } else {
-        res.render("login");
+        res.render("account/login");
     }
 });
 
@@ -19,7 +19,7 @@ router.get("/account/register", async (req, res) => {
     if (req.session.loggedin) {
         res.redirect("/user");
     } else {
-        res.render("register");
+        res.render("account/register");
     }
 });
 
@@ -30,7 +30,7 @@ router.get("/account/logout", async (req, res) => {
 
 router.get("/account/change_username", async (req, res) => {
     if (req.session.loggedin) {
-        res.render("change_username");
+        res.render("account/change_username");
     } else {
         res.redirect("/account/login");
     }
@@ -38,7 +38,7 @@ router.get("/account/change_username", async (req, res) => {
 
 router.get("/account/change_password", async (req, res) => {
     if (req.session.loggedin) {
-        res.render("change_password");
+        res.render("account/change_password");
     } else {
         res.redirect("/account/login");
     }
@@ -51,9 +51,7 @@ router.post("/account/signup", async (req, res) => {
     // Check the db if username exists
     let usernameExists = await db_utils.usernameExists(username_input);
     if (usernameExists) {
-        res.render("message", {
-            message: "This username is taken, try again.",
-        });
+        res.render("message", { message: "This username is taken, try again." });
     } else {
         // Hash the password
         let salt = await bcrypt.genSalt();
@@ -74,9 +72,7 @@ router.post("/account/auth", async (req, res) => {
     // Check the db if username exists
     let usernameExists = await db_utils.usernameExists(username_input);
     if (!usernameExists) {
-        res.render("message", {
-            message: "This username does not exist.",
-        });
+        res.render("message", { message: "This username does not exist." });
     } else {
         // Compare passwords with the one in db
         let password = await db_utils.getPassword(username_input);
@@ -86,9 +82,7 @@ router.post("/account/auth", async (req, res) => {
             req.session.username = username_input;
             res.redirect("/user");
         } else {
-            res.render("message", {
-                message: "Wrong password!",
-            });
+            res.render("message", { message: "Wrong password!" });
         }
     }
 });
@@ -104,9 +98,7 @@ router.post("/account/change_username", async (req, res) => {
         let password = await db_utils.getPassword(req.session.username);
         let pass_check = await bcrypt.compare(password_input, password);
         if (!pass_check) {
-            res.render("message", {
-                message: "Wrong password",
-            });
+            res.render("message", { message: "Wrong password" });
         } else {
             await db_utils.changeUserName(new_username, req.session.username);
             req.session.username = new_username;
@@ -123,25 +115,19 @@ router.post("/account/change_password", async (req, res) => {
     if (!req.session.loggedin) {
         res.redirect("/account/login");
     } else if (confirm_new_password != new_password) {
-        res.render("message", {
-            message: "Passwords don't match!",
-        });
+        res.render("message", { message: "Passwords don't match!" });
     } else {
         // Compare passwords with the one in db
         let password = await db_utils.getPassword(req.session.username);
         let pass_check = await bcrypt.compare(old_password, password);
         if (!pass_check) {
-            res.render("message", {
-                message: "Wrong password",
-            });
+            res.render("message", { message: "Wrong password" });
         } else {
             // Hash the password
             let salt = await bcrypt.genSalt();
             let hashedPassword = await bcrypt.hash(new_password, salt);
             await db_utils.changePassword(hashedPassword, req.session.username);
-            res.render("message", {
-                message: "Password changed successfully.",
-            });
+            res.render("message", { message: "Password changed successfully." });
         }
     }
 });
