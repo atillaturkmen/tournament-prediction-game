@@ -2,9 +2,9 @@
   "name": "tournament-prediction-game",
   "version": "1.0.0",
   "description": "A site where you guess match scores",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node app.js"
   },
   "repository": {
     "type": "git",
