@@ -33,7 +33,9 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"username"	TEXT NOT NULL UNIQUE,
 	"password"	TEXT NOT NULL,
-	"points"	INTEGER NOT NULL DEFAULT 0
+	"points"	INTEGER NOT NULL DEFAULT 0,
+	"correct_winner_guesses"	INTEGER NOT NULL DEFAULT 0,
+	"correct_score_guesses"	INTEGER NOT NULL DEFAULT 0
 );
 CREATE TABLE IF NOT EXISTS "champion_guess" (
 	"tournament_name"	TEXT NOT NULL,
