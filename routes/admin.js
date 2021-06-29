@@ -14,25 +14,20 @@ router.use(async (req, res, next) => {
     }
 });
 
+// ---------- GET request handlers -----------
+
 router.get("/admin", async (req, res) => {
     res.render("admin/admin");
 });
 
-router.get("/admin/add", (req, res) => {
-    res.render("admin/add");
+router.get("/admin/add", async (req, res) => {
+    let adminCount = await db_utils.getRowCount("admin");
+    res.render("admin/add", { adminCount: adminCount });
 });
 
-router.post("/admin/add", async (req, res) => {
-    await helper.wrongPass(req.session.username, req.body.password, res);
-    if (await db_utils.adminExists) {
-        return res.render("message", { message: "This user is already an admin." });
-    }
-    await db_utils.addAdmin(req.body.new_admin);
-    res.render("message", { message: "New admin added." });
-});
-
-router.get("/admin/team", (req, res) => {
-    res.send("burada takım eklenecek");
+router.get("/admin/team", async (req, res) => {
+    let teamCount = await db_utils.getRowCount("team");
+    res.render("admin/team", { teamCount: teamCount });
 });
 
 router.get("/admin/match", (req, res) => {
@@ -41,6 +36,34 @@ router.get("/admin/match", (req, res) => {
 
 router.get("/admin/score", (req, res) => {
     res.send("burada skor eklenecek");
+});
+
+// ---------- POST request handlers -----------
+
+router.post("/admin/add", async (req, res) => {
+    if (await helper.wrongPass(req.session.username, req.body.password, res)) return;
+    if (await db_utils.isAdmin(req.body.new_admin)) {
+        return res.render("message", { message: "This user is already an admin." });
+    }
+    await db_utils.addAdmin(req.body.new_admin);
+    res.render("message", { message: "New admin added." });
+});
+
+router.post("/admin/team", async (req, res) => {
+    let name = req.body.team_name;
+    let logo = req.body.team_logo;
+    name = name.toLowerCase();
+    name = name.trim();
+    logo = logo.trim();
+    if (logo == "") {
+        logo = "https://sshraevents.org/wp-content/uploads/2019/12/nologo.png";
+    }
+    if (await db_utils.teamExists(name)) {
+        await db_utils.updateLogo(name, logo);
+        return res.render("message", { message: "Team logo updated." });
+    }
+    await db_utils.addTeam(name, logo);
+    res.render("message", { message: "Team added." });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files
