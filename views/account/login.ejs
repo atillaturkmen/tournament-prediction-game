@@ -12,17 +12,18 @@
 
 <body>
 	<%- include('../navbar'); -%>
-	<br>
+
+	<!-- login -->
 	<div class="login-form text-center">
-		<h1>Login Form</h1>
 		<form action="/account/auth" method="POST">
-			<input type="text" name="username" placeholder="Username" required>
-			<input type="password" name="password" placeholder="Password" required>
-			<button type="submit">Login</button>
-			<a href="/account/register" style="float:right">You don't have an account?</a>
+			<input type="text" name="username" placeholder="Kullanıcı Adı" required>
+			<input type="password" name="password" placeholder="Şifre" required>
+			<button type="submit">Giriş</button>
+			<a href="/account/register">Hesabın yok mu? Kaydol!</a>
 		</form>
-		<br>
 	</div>
+    <!-- login-end -->
+	
 </body>
 
 </html>

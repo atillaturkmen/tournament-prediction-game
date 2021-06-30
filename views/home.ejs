@@ -12,6 +12,8 @@
 
 <body>
     <%- include('navbar'); -%>
+
+    <!-- leaderboard -->
     <div class="leaderboard-div" style="text-align: center;">
         <table class="leaderboard">
             <thead>
@@ -36,6 +38,35 @@
         <br>
         <br>
     </div>
+    <!-- leaderboard-end -->
+
+     <!-- tiny-leaderboard -->
+     <div class="tiny-leaderboard-div">
+        <table class="tiny-leaderboard">
+
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Puan</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% for (var i = 0; i < topTen.length; i++) { %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
+                    <td><%= topTen[i].points%></td>
+                </tr>
+                <% } %>
+            </tbody>
+
+        </table>
+    </div>
+    <!-- tiny-leaderboard-end -->
+
+
 </body>
 
 </html>

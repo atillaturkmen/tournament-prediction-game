@@ -12,14 +12,18 @@
 
 <body>
 	<%- include('../navbar'); -%>
+
+	<!-- register -->
 	<div class="login-form text-center">
-		<h1>Register Form</h1>
-		<form action="/account/signup" method="POST">
-			<input type="text" name="username" placeholder="Username" autocomplete="off" required>
-			<input type="password" name="password" placeholder="Password" autocomplete="off" required>
-			<button type="submit">Register</button>
+		<form action="/account/auth" method="POST">
+			<input type="text" name="username" placeholder="Kullanıcı Adı" required>
+			<input type="password" name="password" placeholder="Şifre" required>
+			<input type="password" name="password" placeholder="Şifre Tekrar" required>
+			<button type="submit">Kaydol</button>
+			<a href="/account/register">Zaten bir hesabın var mı? Giriş Yap!</a>
 		</form>
 	</div>
+    <!-- register-end -->
 </body>
 
 </html>
