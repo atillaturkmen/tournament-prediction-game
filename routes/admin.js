@@ -30,6 +30,11 @@ router.get("/admin/team", async (req, res) => {
     res.render("admin/team", { teamCount: teamCount });
 });
 
+router.get("/admin/tournament", async (req, res) => {
+    let tournamentCount = await db_utils.getRowCount("tournament");
+    res.render("admin/tournament", { tournamentCount: tournamentCount });
+});
+
 router.get("/admin/match", (req, res) => {
     res.send("burada maç eklenecek");
 });
@@ -68,6 +73,17 @@ router.post("/admin/team", async (req, res) => {
     }
     await db_utils.addTeam(name, logo);
     res.render("message", { message: "Team added." });
+});
+
+router.post("/admin/tournament", async (req, res) => {
+    let tournament = req.body.tournament;
+    tournament = tournament.toLowerCase();
+    tournament = tournament.trim();
+    if (await db_utils.tournamentExists(tournament)) {
+        return res.render("message", { message: "This tournament already exists." });
+    }
+    await db_utils.addTournament(tournament);
+    res.render("message", { message: "New tournament added." });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files

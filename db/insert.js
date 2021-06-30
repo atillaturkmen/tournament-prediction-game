@@ -14,3 +14,8 @@ exports.addAdmin = function (username) {
 exports.addTeam = function (name, logo) {
     return query("INSERT INTO team (name, logo) VALUES (?, ?);", [name, logo]);
 };
+
+// Adds a tournament to db
+exports.addTournament = function (name) {
+    return query("INSERT INTO tournament (name) VALUES (?);", [name]);
+};
