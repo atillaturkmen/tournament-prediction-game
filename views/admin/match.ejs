@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<!--TODO-->
+<!--https://www.w3schools.com/howto/howto_js_autocomplete.asp-->
+<%- include('../header'); -%>
+
+<head>
+	<link rel="stylesheet" href="/public/css/register-form.css">
+</head>
+
+<body>
+	<%- include('../navbar'); -%>
+	<br>
+	<div class="login-form text-center">
+		<h1>Add Match</h1>
+		<form action="/admin/match" method="POST" autocomplete="off">
+			<input type="text" name="home_team" placeholder="Home Team" required>
+			<input type="text" name="away_team" placeholder="Away Team" required>
+			<button type="submit">Add</button>
+			<a href="/admin" style="float:right">Go back to admin panel</a>
+		</form>
+		<br>
+		<p>Current number of matches: <%= matchCount %></p>
+	</div>
+</body>
+
+</html>
