@@ -36,6 +36,10 @@ body {
 .navbar a {
     text-decoration: none;
     color: #393939;
+    display: block;
+    line-height: 3;
+    width: 100%;
+    text-align: center;
 }
 
 .navbar-left .fa-chevron-down {
@@ -80,10 +84,13 @@ body {
 
 .navbar-user {
     flex-basis: 48px;
+    text-align: center;
+    line-height: 48px;
 }
 
 .navbar-user .fa-user-circle {
     font-size: 2rem;
+    line-height: 3;
 }
 
 .navbar-user:hover {
