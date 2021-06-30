@@ -61,7 +61,7 @@ router.post("/account/signup", async (req, res) => {
         // Hash the password
         let hashedPassword = await hashPassword(password_input);
         // Create and login
-        await db_utils.createUser(username_input, hashedPassword);
+        await db_utils.addUser(username_input, hashedPassword);
         login(req, res, username_input);
     }
 });

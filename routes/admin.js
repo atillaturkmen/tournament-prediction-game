@@ -41,11 +41,15 @@ router.get("/admin/score", (req, res) => {
 // ---------- POST request handlers -----------
 
 router.post("/admin/add", async (req, res) => {
+    let new_admin = req.body.new_admin;
     if (await helper.wrongPass(req.session.username, req.body.password, res)) return;
-    if (await db_utils.isAdmin(req.body.new_admin)) {
+    if (!await db_utils.usernameExists(new_admin)) {
+        return res.render("message", { message: "This user does not exist." });
+    }
+    if (await db_utils.isAdmin(new_admin)) {
         return res.render("message", { message: "This user is already an admin." });
     }
-    await db_utils.addAdmin(req.body.new_admin);
+    await db_utils.addAdmin(new_admin);
     res.render("message", { message: "New admin added." });
 });
 
@@ -59,7 +63,7 @@ router.post("/admin/team", async (req, res) => {
         logo = "https://sshraevents.org/wp-content/uploads/2019/12/nologo.png";
     }
     if (await db_utils.teamExists(name)) {
-        await db_utils.updateLogo(name, logo);
+        await db_utils.changeLogo(name, logo);
         return res.render("message", { message: "Team logo updated." });
     }
     await db_utils.addTeam(name, logo);
