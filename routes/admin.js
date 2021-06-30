@@ -22,7 +22,7 @@ router.get("/admin", async (req, res) => {
 
 router.get("/admin/add", async (req, res) => {
     let adminCount = await db_utils.getRowCount("admin");
-    res.render("admin/add", { adminCount: adminCount });
+    res.render("admin/addmin", { adminCount: adminCount });
 });
 
 router.get("/admin/team", async (req, res) => {
@@ -35,8 +35,9 @@ router.get("/admin/tournament", async (req, res) => {
     res.render("admin/tournament", { tournamentCount: tournamentCount });
 });
 
-router.get("/admin/match", (req, res) => {
-    res.send("burada maç eklenecek");
+router.get("/admin/match", async (req, res) => {
+    let matchCount = await db_utils.getRowCount("match");
+    res.render("admin/match", { matchCount: matchCount });
 });
 
 router.get("/admin/score", (req, res) => {
