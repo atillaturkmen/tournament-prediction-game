@@ -5,7 +5,7 @@ exports.query = function (sql, params = []) {
     return new Promise(function (resolve, reject) {
         database.all(sql, params, function (error, rows) {
             if (error)
-                console.log(error);
+                reject(error);
             else
                 resolve(rows);
         });

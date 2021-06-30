@@ -53,3 +53,10 @@ app.use(function (req, res, next) {
     // default to plain-text. send()
     res.type('txt').send('Not found');
 });
+
+// If there is an error this function is fired
+app.use(function (err, req, res, next) {
+    console.log(err);
+    res.status(500);
+    res.render('message', { message: "hata oldu" });
+});
