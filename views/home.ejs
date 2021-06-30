@@ -9,14 +9,16 @@
         <table class="leaderboard">
             <thead>
                 <tr>
-                    <th scope="col">Username</th>
-                    <th scope="col">Correct Score Guesses</th>
-                    <th scope="col">Correct Winner Guesses</th>
-                    <th scope="col">Points</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Skor</th>
+                    <th scope="col">İY/MS</th>
+                    <th scope="col">Puan</th>
                 </tr>
             </thead>
             <% for (var i = 0; i < topTen.length; i++) { %>
             <tr>
+                <td><%= i+1 %></td>
                 <td><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
                 <td><%= topTen[i].correct_score_guesses %></td>
                 <td><%= topTen[i].correct_winner_guesses %></td>
