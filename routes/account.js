@@ -52,24 +52,27 @@ router.get("/account/change_password", async (req, res) => {
 // Creates user
 router.post("/account/signup", async (req, res) => {
     let username_input = req.body.username;
-    let password_input = req.body.password;
-    // Check the db if username exists
-    let usernameExists = await db_utils.usernameExists(username_input);
-    if (usernameExists) {
-        res.render("message", { message: "This username is taken, try again." });
-    } else {
-        // Hash the password
-        let hashedPassword = await hashPassword(password_input);
-        // Create and login
-        await db_utils.addUser(username_input, hashedPassword);
-        login(req, res, username_input);
+    let password_input = req.body.password.toString();
+    let password_confirm = req.body.password_confirm.toString();
+    // Check confirm password
+    if (password_confirm != password_input) {
+        return res.render("message", { message: "Passwords don't match." });
     }
+    // Check the db if username exists
+    if (await db_utils.usernameExists(username_input)) {
+        return res.render("message", { message: "This username is taken, try again." });
+    }
+    // Hash the password
+    let hashedPassword = await hashPassword(password_input);
+    // Create and login
+    await db_utils.addUser(username_input, hashedPassword);
+    login(req, res, username_input);
 });
 
 // Handles login
 router.post("/account/auth", async (req, res) => {
     let username_input = req.body.username;
-    let password_input = req.body.password;
+    let password_input = req.body.password.toString();
 
     // Check the db if username exists
     let usernameExists = await db_utils.usernameExists(username_input);
@@ -85,7 +88,7 @@ router.post("/account/auth", async (req, res) => {
 
 router.post("/account/change_username", async (req, res) => {
     let new_username = req.body.new_username;
-    let password_input = req.body.password;
+    let password_input = req.body.password.toString();
 
     if (!req.session.loggedin) {
         res.redirect("/account/login");
@@ -101,8 +104,8 @@ router.post("/account/change_username", async (req, res) => {
 
 router.post("/account/change_password", async (req, res) => {
     let old_password = req.body.old_password;
-    let new_password = req.body.new_password;
-    let confirm_new_password = req.body.confirm_new_password;
+    let new_password = req.body.new_password.toString();
+    let confirm_new_password = req.body.confirm_new_password.toString();
 
     if (!req.session.loggedin) {
         res.redirect("/account/login");

@@ -15,12 +15,12 @@
 
 	<!-- register -->
 	<div class="login-form text-center">
-		<form action="/account/auth" method="POST">
+		<form action="/account/signup" method="POST">
 			<input type="text" name="username" placeholder="Kullanıcı Adı" required>
 			<input type="password" name="password" placeholder="Şifre" required>
-			<input type="password" name="password" placeholder="Şifre Tekrar" required>
+			<input type="password" name="password_confirm" placeholder="Şifre Tekrar" required>
 			<button type="submit">Kaydol</button>
-			<a href="/account/register">Zaten bir hesabın var mı? Giriş Yap!</a>
+			<a href="/account/login">Zaten bir hesabın var mı? Giriş Yap!</a>
 		</form>
 	</div>
     <!-- register-end -->
