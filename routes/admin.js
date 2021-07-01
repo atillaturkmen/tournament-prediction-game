@@ -37,11 +37,15 @@ router.get("/admin/tournament", async (req, res) => {
 });
 
 router.get("/admin/match", async (req, res) => {
-    let matchCount = await db_utils.getRowCount("match");
-    let allTeams = await db_utils.getAllTeams();
-    res.render("admin/match", {
-        matchCount: matchCount,
-        teams: JSON.stringify(allTeams),
+    Promise.all([db_utils.getRowCount("match"), db_utils.getAllTournaments(), db_utils.getAllTeams()]).then((values) => {
+        let matchCount = values[0];
+        let allTournaments = values[1].map(x => x.toUpperCase()); // capitalize all letters
+        let allTeams = values[2].map(x => helper.capitalizeTheFirstLetterOfEachWord(x)); // capitalize first letters
+        res.render("admin/match", {
+            matchCount: matchCount,
+            teams: JSON.stringify(allTeams),
+            tournaments: JSON.stringify(allTournaments),
+        });
     });
 });
 
@@ -53,7 +57,7 @@ router.get("/admin/score", (req, res) => {
 
 router.post("/admin/add", async (req, res) => {
     let new_admin = req.body.new_admin;
-    if (await helper.wrongPass(req.session.username, req.body.password.toString(), res)) return;
+    if (await db_utils.wrongPass(req.session.username, req.body.password.toString(), res)) return;
     if (!await db_utils.usernameExists(new_admin)) {
         return res.render("message", { message: "This user does not exist." });
     }

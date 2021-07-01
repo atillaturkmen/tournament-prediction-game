@@ -10,17 +10,19 @@
     <link rel="stylesheet" href="/public/css/user.css">
     <link rel="stylesheet" href="/public/css/neutral-navbar.css">
 	<link rel="stylesheet" href="/public/css/auto-complete-form.css">
+	<link rel="stylesheet" href="/public/css/register-form.css">
 </head>
 
 <body>
 	<%- include('../navbar'); -%>
-	<br>
 	<div class="login-form text-center">
 		<h1>Add Match</h1>
 		<form action="/admin/match" method="POST" autocomplete="off">
 			<div class="autocomplete" style="width:300px;">
 				<input id="home_team" type="text" name="home_team" placeholder="Home Team" required>
 				<input id="away_team" type="text" name="away_team" placeholder="Away Team" required>
+				<input id="time" type="datetime-local" name="time" placeholder="Time" required>
+				<input id="in_tournament" type="text" name="in_tournament" placeholder="Tournament">
 			</div>
 			<button type="submit">Add</button>
 			<a href="/admin" style="float:right">Go back to admin panel</a>
@@ -32,8 +34,10 @@
 	<script src="/public/js/auto-complete-form.js"></script>
 	<script>
 		let teams = <%- teams %>
+		let tournaments = <%- tournaments %>
 		autocomplete(document.getElementById("home_team"), teams);
 		autocomplete(document.getElementById("away_team"), teams);
+		autocomplete(document.getElementById("in_tournament"), tournaments);
 	</script>
 </body>
 

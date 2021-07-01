@@ -34,3 +34,9 @@ exports.getAllTeams = async function () {
     let result = await query("SELECT name FROM team;");
     return result.map(x => x.name);
 };
+
+// Get names of all tournaments
+exports.getAllTournaments = async function () {
+    let result = await query("SELECT name FROM tournament;");
+    return result.map(x => x.name);
+};

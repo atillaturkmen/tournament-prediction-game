@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt"); // used for hashing passwords
 const router = express.Router();
 
 const db_utils = require("../db/db-utils"); // you can import our database utility functions like so
-const helper = require("../helper");
 
 // ---------- GET request handlers -----------
 
@@ -80,7 +79,7 @@ router.post("/account/auth", async (req, res) => {
         res.render("message", { message: "This username does not exist." });
     } else {
         // Compare passwords with the one in db
-        if (await helper.wrongPass(username_input, password_input, res)) return;
+        if (await db_utils.wrongPass(username_input, password_input, res)) return;
         // Login if passwords match
         login(req, res, username_input);
     }
@@ -94,7 +93,7 @@ router.post("/account/change_username", async (req, res) => {
         res.redirect("/account/login");
     } else {
         // Compare passwords with the one in db
-        if (await helper.wrongPass(req.session.username, password_input, res)) return;
+        if (await db_utils.wrongPass(req.session.username, password_input, res)) return;
         // Change username if passwords match
         await db_utils.changeUserName(new_username, req.session.username);
         req.session.username = new_username;
@@ -113,7 +112,7 @@ router.post("/account/change_password", async (req, res) => {
         res.render("message", { message: "Passwords don't match!" });
     } else {
         // Compare passwords with the one in db
-        if (await helper.wrongPass(req.session.username, old_password, res)) return;
+        if (await db_utils.wrongPass(req.session.username, old_password, res)) return;
         // Hash the new password and put it into db
         let hashedPassword = await hashPassword(new_password);
         await db_utils.changePassword(hashedPassword, req.session.username);
