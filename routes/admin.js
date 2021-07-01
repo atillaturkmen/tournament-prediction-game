@@ -38,7 +38,11 @@ router.get("/admin/tournament", async (req, res) => {
 
 router.get("/admin/match", async (req, res) => {
     let matchCount = await db_utils.getRowCount("match");
-    res.render("admin/match", { matchCount: matchCount });
+    let allTeams = await db_utils.getAllTeams();
+    res.render("admin/match", {
+        matchCount: matchCount,
+        teams: JSON.stringify(allTeams),
+    });
 });
 
 router.get("/admin/score", (req, res) => {

@@ -28,3 +28,9 @@ exports.getLogo = async function (name) {
     let result = await query("SELECT logo FROM team WHERE name = ?;", [name]);
     return result[0].logo;
 };
+
+// Get names of all teams
+exports.getAllTeams = async function () {
+    let result = await query("SELECT name FROM team;");
+    return result.map(x => x.name);
+};

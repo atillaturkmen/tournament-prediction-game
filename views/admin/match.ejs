@@ -1,14 +1,15 @@
+<!--https://www.w3schools.com/howto/howto_js_autocomplete.asp-->
+
 <!DOCTYPE html>
 <html>
-<!--TODO-->
-<!--https://www.w3schools.com/howto/howto_js_autocomplete.asp-->
+
 <%- include('../header'); -%>
 
 <head>
     <!-- css -->
     <link rel="stylesheet" href="/public/css/user.css">
     <link rel="stylesheet" href="/public/css/neutral-navbar.css">
-	<link rel="stylesheet" href="/public/css/register-form.css">
+	<link rel="stylesheet" href="/public/css/auto-complete-form.css">
 </head>
 
 <body>
@@ -17,14 +18,23 @@
 	<div class="login-form text-center">
 		<h1>Add Match</h1>
 		<form action="/admin/match" method="POST" autocomplete="off">
-			<input type="text" name="home_team" placeholder="Home Team" required>
-			<input type="text" name="away_team" placeholder="Away Team" required>
+			<div class="autocomplete" style="width:300px;">
+				<input id="home_team" type="text" name="home_team" placeholder="Home Team" required>
+				<input id="away_team" type="text" name="away_team" placeholder="Away Team" required>
+			</div>
 			<button type="submit">Add</button>
 			<a href="/admin" style="float:right">Go back to admin panel</a>
 		</form>
 		<br>
 		<p>Current number of matches: <%= matchCount %></p>
 	</div>
+
+	<script src="/public/js/auto-complete-form.js"></script>
+	<script>
+		let teams = <%- teams %>
+		autocomplete(document.getElementById("home_team"), teams);
+		autocomplete(document.getElementById("away_team"), teams);
+	</script>
 </body>
 
 </html>
