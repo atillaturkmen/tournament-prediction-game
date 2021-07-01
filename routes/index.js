@@ -1,4 +1,5 @@
 const express = require("express"); // import express
+const path = require("path");
 
 const router = express.Router();
 
@@ -36,6 +37,10 @@ router.get("/admin", admin);
 router.post("/admin", admin);
 router.get("/admin/*", admin);
 router.post("/admin/*", admin);
+
+router.get("/favicon.ico", function (req, res) {
+    res.sendFile(path.join(__dirname, "/../public/icon/favicon.ico"));
+});
 
 // Make this js module available for import (at index.js in the root)
 module.exports = router;
