@@ -87,13 +87,44 @@ router.post("/admin/team", async (req, res) => {
 
 router.post("/admin/tournament", async (req, res) => {
     let tournament = req.body.tournament;
-    tournament = tournament.toLowerCase();
-    tournament = tournament.trim();
+    tournament = tournament.toLowerCase().trim();
     if (await db_utils.tournamentExists(tournament)) {
         return res.render("message", { message: "This tournament already exists." });
     }
     await db_utils.addTournament(tournament);
     res.render("message", { message: "New tournament added." });
+});
+
+router.post("/admin/match", async (req, res) => {
+    let home_team = req.body.home_team;
+    let away_team = req.body.away_team;
+    let time = req.body.time;
+    let tournament = req.body.in_tournament;
+    home_team = home_team.toLowerCase().trim();
+    away_team = away_team.toLowerCase().trim();
+    tournament = tournament.toLowerCase().trim();
+    time = time.substring(0, 10) + " " + time.substring(10 + 1); // Replace T at the middle with a space for sqlite
+
+    // Team related checks
+    if (!await db_utils.teamExists(home_team)) {
+        return res.render("message", { message: "Home team does not exist in database." });
+    }
+    if (!await db_utils.teamExists(away_team)) {
+        return res.render("message", { message: "Away team does not exist in database." });
+    }
+    if (home_team == away_team) {
+        return res.render("message", { message: "Home team and away team can not be the same team." });
+    }
+    // Tournament checks
+    if (tournament == "") {
+        db_utils.addMatchWithoutTournament(home_team, away_team, time);
+    } else if (!await db_utils.tournamentExists(tournament)) {
+        return res.render("message", { message: "This tournament does not exist in database." });
+    } else {
+        db_utils.addMatchWithTournament(home_team, away_team, time, tournament);
+    }
+
+    res.render("message", { message: "Match added." });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files
