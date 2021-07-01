@@ -8,7 +8,8 @@ const helper = require("../helper");
 // Can not access any of this routes if user is not admin
 router.use(async (req, res, next) => {
     if (!await db_utils.isAdmin(req.session.username)) {
-        res.redirect("/yasak");
+        res.status(403);
+        res.render("message", { message: "You do not have permission to access here." });
     } else {
         next();
     }
@@ -48,7 +49,7 @@ router.get("/admin/score", (req, res) => {
 
 router.post("/admin/add", async (req, res) => {
     let new_admin = req.body.new_admin;
-    if (await helper.wrongPass(req.session.username, req.body.password, res)) return;
+    if (await helper.wrongPass(req.session.username, req.body.password.toString(), res)) return;
     if (!await db_utils.usernameExists(new_admin)) {
         return res.render("message", { message: "This user does not exist." });
     }

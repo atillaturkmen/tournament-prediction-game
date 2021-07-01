@@ -38,6 +38,7 @@ router.post("/admin", admin);
 router.get("/admin/*", admin);
 router.post("/admin/*", admin);
 
+// Serve thumbnail icon
 router.get("/favicon.ico", function (req, res) {
     res.sendFile(path.join(__dirname, "/../public/icon/favicon.ico"));
 });
