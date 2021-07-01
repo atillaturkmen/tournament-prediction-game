@@ -4,7 +4,7 @@
 <%- include('../header'); -%>
 
 <head>
-    <title>Change Username</title>
+    <title>Kullanıcı Adı Değiştir</title>
     <!-- css -->
     <link rel="stylesheet" href="/public/css/user.css">
     <link rel="stylesheet" href="/public/css/neutral-navbar.css">
@@ -15,9 +15,9 @@
     <%- include('../navbar'); -%>
     <br>
     <form action="/account/change_username" method="POST" class="login-form text-center">
-        <input type="password" name="password" placeholder="Password" autocomplete="off" required>
-        <input type="text" name="new_username" placeholder="New Username" autocomplete="off" required>
-        <button type="submit" class="text-center">Change username</button>
+        <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" autocomplete="off" required>
+        <input type="password" name="password" placeholder="Şifre" autocomplete="off" required>
+        <button type="submit" class="text-center">Kullanıcı Adı Değiştir</button>
     </form>
 </body>
 
