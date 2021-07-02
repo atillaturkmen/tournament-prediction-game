@@ -62,20 +62,18 @@ flex-basis: 0;
     justify-content: center;
     flex-basis: 0;
     border-right: solid #F5F3F1;
-    font-weight: bold;
     color: #c2c2c2;
 }
 
 .tahmin-et-buton a {
     color: #393939;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .tahminleri-gör-buton a {
     color: #c2c2c2;
     text-decoration: none;
-    font-weight: bold;
+    cursor: not-allowed;
 }
 
 .tahmin-et-buton:hover {
@@ -166,7 +164,6 @@ flex-basis: 0;
     flex-grow: 1;
     justify-content: center;
     flex-basis: 0;
-    font-weight: bold;
     color: #c2c2c2;
     height: 48px;
 }
@@ -174,13 +171,12 @@ flex-basis: 0;
 .tiny-tahmin-et-buton a {
     color: #393939;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .tiny-tahminleri-gör-buton a {
     color: #c2c2c2;
     text-decoration: none;
-    font-weight: bold;
+    cursor: not-allowed;
 }
 
 .tiny-tahmin-et-buton:hover {
