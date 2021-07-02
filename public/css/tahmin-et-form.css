@@ -63,6 +63,7 @@
 .home-team, .away-team {
     flex-grow: 2.5;
     flex-basis: 0;
+    min-width: 95px;
 }
 
 .home-team {
@@ -203,13 +204,6 @@
         display: none;
     }
 
-    .home-full-time-prediction,
-    .away-full-time-prediction,
-    .home-first-half-prediction,
-    .away-first-half-prediction {
-        flex-basis: 26px;
-    }
-
     .predict-match-form .predict-match-form-first-row {
         height: 48px;
     }
@@ -217,8 +211,25 @@
     .predict-match-form .predict-match-form-second-row {
         height: 48px;
     }
+}
 
+@media (max-width: 300px) {
 
+    .predict-match-form img {
+        height: 24px;
+        width: 24px;
+        margin: 0;
+    }
+
+    .score-input {
+        width: 1rem;
+        height: 1rem;
+        font-size: 0.75rem;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    
 }
 
 /* predict-form-end */
