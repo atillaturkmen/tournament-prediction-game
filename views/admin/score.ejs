@@ -21,7 +21,7 @@
             &nbsp &nbsp - &nbsp &nbsp
             <!-- away-team --> <img src=<%= matches[i].away_team_logo %> alt=""> &nbsp <%= matches[i].away_team %>
         </div>
-        <div class="tahmin-et-buton"> <a href="">Gerçek skoru gir</a> </div>
+        <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Gerçek skoru gir</a> </div>
     </div>
     <!-- predict-end -->
 
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="tiny-predict-match-second-row">
-            <div class="tiny-tahmin-et-buton"> <a href="">Gerçek skoru gir</a> </div>
+            <div class="tiny-tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Gerçek skoru gir</a> </div>
         </div>
     </div>
     <!-- tiny-predict-end -->

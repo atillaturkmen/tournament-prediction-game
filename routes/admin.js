@@ -5,7 +5,6 @@ const router = express.Router();
 const db_utils = require("../db/db-utils"); // import our database utility functions
 const helper = require("../helper");
 
-/*
 // Can not access any of this routes if user is not admin
 router.use(async (req, res, next) => {
     if (!await db_utils.isAdmin(req.session.username)) {
@@ -15,7 +14,6 @@ router.use(async (req, res, next) => {
         next();
     }
 });
-*/
 
 // ---------- GET request handlers -----------
 
@@ -53,15 +51,20 @@ router.get("/admin/match", async (req, res) => {
 
 router.get("/admin/score", async (req, res) => {
     let matches = await db_utils.getEmptyMatches();
-    console.log(matches);
     res.render("admin/score", {
         matches: matches,
     });
 });
 
-router.get("/admin/score/:match_id", (req, res) => {
+router.get("/admin/score/:match_id", async (req, res) => {
     let match_id = req.params.match_id;
-    res.send("TODO");
+    let match = await db_utils.getMatchById(match_id);
+    if (match.home_goals_first_half != null) {
+        return res.render("message", { message: "This match already has score information." });
+    }
+    res.render("admin/score-form", {
+        match: match,
+    });
 });
 
 // ---------- POST request handlers -----------
@@ -136,6 +139,22 @@ router.post("/admin/match", async (req, res) => {
     }
 
     res.render("message", { message: "Match added." });
+});
+
+router.post("/admin/score/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    // Do not allow modification on scored matches
+    let match = await db_utils.getMatchById(match_id);
+    if (match.home_goals_first_half != null) {
+        return res.render("message", { message: "This match already has score information." });
+    }
+    // Put to db
+    let home_first = req.body.home_first_half;
+    let away_first = req.body.away_first_half;
+    let home_full = req.body.home_full_time;
+    let away_full = req.body.away_full_time;
+    await db_utils.enterScore(match_id, home_first, away_first, home_full, away_full);
+    res.render("message", { message: "Match score updated." });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files
