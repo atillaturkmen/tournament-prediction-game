@@ -12,6 +12,9 @@
 <body>
 	<%- include('navbar'); -%>
 	<br>
+    <% if (matches.length == 0) { %>
+        <p style="text-align: center;">No upcoming matches.</p>
+    <% } %>
     <% for (var i = 0; i < matches.length; i++) { %>
 	<!-- predict -->
     <div class="predict-match">
