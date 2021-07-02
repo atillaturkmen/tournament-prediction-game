@@ -39,22 +39,16 @@ router.get("/admin/tournament", async (req, res) => {
 router.get("/admin/match", async (req, res) => {
     Promise.all([db_utils.getRowCount("match"), db_utils.getAllTournaments(), db_utils.getAllTeams()]).then((values) => {
         let matchCount = values[0];
-        let allTournaments = values[1].map(x => x.toUpperCase()); // capitalize all letters
-        let allTeams = values[2].map(x => helper.capitalizeTheFirstLetterOfEachWord(x)); // capitalize first letters
         res.render("admin/match", {
             matchCount: matchCount,
-            teams: JSON.stringify(allTeams),
-            tournaments: JSON.stringify(allTournaments),
+            tournaments: JSON.stringify(values[1]),
+            teams: JSON.stringify(values[2]),
         });
     });
 });
 
 router.get("/admin/score", async (req, res) => {
     let matches = await db_utils.getEmptyMatches();
-    for (let i = 0; i < matches.length; i++) {
-        matches[i].home_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].home_team);
-        matches[i].away_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].away_team);
-    }
     res.render("admin/score", {
         matches: matches,
     });
@@ -92,8 +86,8 @@ router.post("/admin/add", async (req, res) => {
 router.post("/admin/team", async (req, res) => {
     let name = req.body.team_name;
     let logo = req.body.team_logo;
-    name = name.toLowerCase();
     name = name.trim();
+    name = helper.capitalizeTheFirstLetterOfEachWord(name);
     logo = logo.trim();
     if (logo == "") {
         logo = "https://sshraevents.org/wp-content/uploads/2019/12/nologo.png";
@@ -108,7 +102,7 @@ router.post("/admin/team", async (req, res) => {
 
 router.post("/admin/tournament", async (req, res) => {
     let tournament = req.body.tournament;
-    tournament = tournament.toLowerCase().trim();
+    tournament = tournament.toUpperCase().trim();
     if (await db_utils.tournamentExists(tournament)) {
         return res.render("message", { message: "This tournament already exists." });
     }
@@ -121,9 +115,11 @@ router.post("/admin/match", async (req, res) => {
     let away_team = req.body.away_team;
     let time = req.body.time;
     let tournament = req.body.in_tournament;
-    home_team = home_team.toLowerCase().trim();
-    away_team = away_team.toLowerCase().trim();
-    tournament = tournament.toLowerCase().trim();
+    home_team = home_team.trim();
+    home_team = helper.capitalizeTheFirstLetterOfEachWord(home_team);
+    away_team = away_team.trim();
+    away_team = helper.capitalizeTheFirstLetterOfEachWord(away_team);
+    tournament = tournament.toUpperCase().trim();
     time = time.substring(0, 10) + " " + time.substring(10 + 1); // Replace T at the middle with a space for sqlite
 
     // Team related checks

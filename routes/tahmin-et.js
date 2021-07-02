@@ -3,7 +3,6 @@ const express = require("express"); // import express
 const router = express.Router();
 
 const db_utils = require("../db/db-utils"); // import our database utility functions
-const helper = require("../helper");
 
 // Can not make guesses if user is not logged in
 router.use(async (req, res, next) => {
@@ -17,10 +16,6 @@ router.use(async (req, res, next) => {
 
 router.get("/tahmin-et", async (req, res) => {
     let matches = await db_utils.getEmptyMatches();
-    for (let i = 0; i < matches.length; i++) {
-        matches[i].home_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].home_team);
-        matches[i].away_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].away_team);
-    }
     res.render("tahmin-et", {
         matches: matches,
     });
