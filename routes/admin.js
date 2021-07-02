@@ -156,17 +156,28 @@ router.post("/admin/score/:match_id", async (req, res) => {
         return res.render("message", { message: "This match already has score information." });
     }
     // Put to db
-    let home_first = req.body.home_first_half;
-    let away_first = req.body.away_first_half;
-    let home_full = req.body.home_full_time;
-    let away_full = req.body.away_full_time;
-    db_utils.enterScore(match_id, home_first, away_first, home_full, away_full);
+    let home_first_real = req.body.home_first_half;
+    let away_first_real = req.body.away_first_half;
+    let home_full_real = req.body.home_full_time;
+    let away_full_real = req.body.away_full_time;
+    db_utils.enterScore(match_id, home_first_real, away_first_real, home_full_real, away_full_real);
     // Update user points
     let guesses = await db_utils.getGuesses(match_id);
     for (let i = 0; i < guesses.length; i++) {
-        
+        let firstHalf = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
+        console.log(firstHalf);
+        let secondHalf = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
+        console.log(secondHalf);
+        db_utils.givePoint(guesses[i].user_id, firstHalf.map((x, j) => x + secondHalf[j]));
     }
     res.render("message", { message: "Match score and user points updated." });
 });
+
+function calculatePoint(a, b, c, d) {
+    if (a == c && b == d) return [0, 1, 5]; // correct score
+    if ((a - b) * (c - d) > 0) return [1, 0, 2]; // correct winner
+    if ((a - b) == 0 && (c - d) == 0) return [1, 0, 2]; // correct winner
+    return [0, 0, 0]; // incorrect
+}
 
 module.exports = router; // this line is needed for importing, necessary for all router files

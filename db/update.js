@@ -34,3 +34,12 @@ exports.changeGuess = async function (match_id, username, home_first, away_first
     away_goals_full_time = ?
     WHERE match_id = ? AND user_id = (select id from user where username = ?);`, [home_first, away_first, home_full, away_full, match_id, username]);
 };
+
+// Give points to a user
+exports.givePoint = async function (user_id, values) {
+    return query(`UPDATE user SET
+    correct_winner_guesses = correct_winner_guesses + ?,
+    correct_score_guesses = correct_score_guesses + ?,
+    points = points + ?
+    WHERE id = ?;`, [...values, user_id]);
+};
