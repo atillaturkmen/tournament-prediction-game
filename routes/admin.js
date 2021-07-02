@@ -144,6 +144,7 @@ router.post("/admin/match", async (req, res) => {
     res.render("message", { message: "Match added." });
 });
 
+// Update final score of match, give users their points
 router.post("/admin/score/:match_id", async (req, res) => {
     let match_id = req.params.match_id;
     if (!await db_utils.matchExists(match_id)) {
@@ -159,8 +160,13 @@ router.post("/admin/score/:match_id", async (req, res) => {
     let away_first = req.body.away_first_half;
     let home_full = req.body.home_full_time;
     let away_full = req.body.away_full_time;
-    await db_utils.enterScore(match_id, home_first, away_first, home_full, away_full);
-    res.render("message", { message: "Match score updated." });
+    db_utils.enterScore(match_id, home_first, away_first, home_full, away_full);
+    // Update user points
+    let guesses = await db_utils.getGuesses(match_id);
+    for (let i = 0; i < guesses.length; i++) {
+        
+    }
+    res.render("message", { message: "Match score and user points updated." });
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files

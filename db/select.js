@@ -77,3 +77,8 @@ exports.getMatchById = async function (id) {
     WHERE id = ?;`, [id]);
     return result[0];
 };
+
+// Get all guesses on a match
+exports.getGuesses = async function (match_id) {
+    return query("SELECT * FROM score_guess WHERE match_id = ?;", [match_id]);
+};
