@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 CREATE TABLE IF NOT EXISTS "team" (
 	"name"	TEXT NOT NULL,
-	"logo"	TEXT,
+	"logo"	TEXT NOT NULL,
 	PRIMARY KEY("name")
 );
 CREATE TABLE IF NOT EXISTS "match" (

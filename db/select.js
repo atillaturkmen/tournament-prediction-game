@@ -40,3 +40,25 @@ exports.getAllTournaments = async function () {
     let result = await query("SELECT name FROM tournament;");
     return result.map(x => x.name);
 };
+
+// Get matches that don't have score information sorted by date
+exports.getEmptyMatches = async function () {
+    return query(`
+    SELECT
+        id,
+        home_team,
+        a.logo AS home_team_logo,
+        away_team,
+        b.logo AS away_team_logo,
+        time,
+        in_tournament
+    FROM
+        match
+    INNER JOIN
+        team AS a ON match.home_team = a.name,
+        team AS b ON match.away_team = b.name
+    WHERE
+        home_goals_full_time IS NULL
+    ORDER BY
+        datetime(time) ASC;`);
+};

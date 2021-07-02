@@ -5,6 +5,7 @@ const router = express.Router();
 const db_utils = require("../db/db-utils"); // import our database utility functions
 const helper = require("../helper");
 
+/*
 // Can not access any of this routes if user is not admin
 router.use(async (req, res, next) => {
     if (!await db_utils.isAdmin(req.session.username)) {
@@ -14,6 +15,7 @@ router.use(async (req, res, next) => {
         next();
     }
 });
+*/
 
 // ---------- GET request handlers -----------
 
@@ -49,8 +51,17 @@ router.get("/admin/match", async (req, res) => {
     });
 });
 
-router.get("/admin/score", (req, res) => {
-    res.send("burada skor eklenecek");
+router.get("/admin/score", async (req, res) => {
+    let matches = await db_utils.getEmptyMatches();
+    console.log(matches);
+    res.render("admin/score", {
+        matches: matches,
+    });
+});
+
+router.get("/admin/score/:match_id", (req, res) => {
+    let match_id = req.params.match_id;
+    res.send("TODO");
 });
 
 // ---------- POST request handlers -----------
