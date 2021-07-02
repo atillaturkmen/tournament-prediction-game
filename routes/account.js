@@ -65,7 +65,9 @@ router.post("/account/signup", async (req, res) => {
     let hashedPassword = await hashPassword(password_input);
     // Create and login
     await db_utils.addUser(username_input, hashedPassword);
-    login(req, res, username_input);
+    req.session.loggedin = true;
+    req.session.username = username_input;
+    res.redirect("/user");
 });
 
 // Handles login
@@ -81,7 +83,11 @@ router.post("/account/auth", async (req, res) => {
         // Compare passwords with the one in db
         if (await db_utils.wrongPass(username_input, password_input, res)) return;
         // Login if passwords match
-        login(req, res, username_input);
+        req.session.loggedin = true;
+        req.session.username = username_input;
+        let redirectTo = req.session.redirectTo || '/user';
+        delete req.session.redirectTo;
+        res.redirect(redirectTo);
     }
 });
 
@@ -119,13 +125,6 @@ router.post("/account/change_password", async (req, res) => {
         res.render("message", { message: "Password changed successfully." });
     }
 });
-
-/** User is logged in */
-function login(req, res, username) {
-    req.session.loggedin = true;
-    req.session.username = username;
-    res.redirect("/user");
-}
 
 /** Hash the password */
 async function hashPassword(pass) {
