@@ -27,6 +27,8 @@ router.post("/euro2020", euro2020);
 const tahmin_et = require("./tahmin-et");
 router.get("/tahmin-et", tahmin_et);
 router.post("/tahmin-et", tahmin_et);
+router.get("/tahmin-et/*", tahmin_et);
+router.post("/tahmin-et/*", tahmin_et);
 
 const account = require("./account");
 router.get("/account/*", account);

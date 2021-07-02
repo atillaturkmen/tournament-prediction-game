@@ -2,8 +2,53 @@
 const express = require("express"); // import express
 const router = express.Router();
 
-router.get("/tahmin-et", (req, res) => {
-    res.send("TODO");
+const db_utils = require("../db/db-utils"); // import our database utility functions
+
+// Can not make guesses if user is not logged in
+router.use(async (req, res, next) => {
+    if (!req.session.loggedin) {
+        req.session.redirectTo = '/tahmin-et';
+        res.redirect("/account/login");
+    } else {
+        next();
+    }
+});
+
+router.get("/tahmin-et", async (req, res) => {
+    let matches = await db_utils.getEmptyMatches();
+    res.render("tahmin-et", {
+        matches: matches,
+    });
+});
+
+router.get("/tahmin-et/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
+    let match = await db_utils.getMatchById(match_id);
+    res.render("tahmin-et-form", {
+        match: match,
+    });
+});
+
+router.post("/tahmin-et/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
+    let home_first = req.body.home_first_half;
+    let away_first = req.body.away_first_half;
+    let home_full = req.body.home_full_time;
+    let away_full = req.body.away_full_time;
+    let username = req.session.username;
+    if (await db_utils.guessExists(match_id, username)) {
+        await db_utils.changeGuess(match_id, username, home_first, away_first, home_full, away_full);
+        res.render("message", { message: "Guess updated." });
+    } else {
+        await db_utils.addGuess(match_id, username, home_first, away_first, home_full, away_full);
+        res.render("message", { message: "Guess added." });
+    }
 });
 
 module.exports = router; // this line is needed for importing, necessary for all router files
