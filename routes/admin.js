@@ -51,6 +51,10 @@ router.get("/admin/match", async (req, res) => {
 
 router.get("/admin/score", async (req, res) => {
     let matches = await db_utils.getEmptyMatches();
+    for (let i = 0; i < matches.length; i++) {
+        matches[i].home_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].home_team);
+        matches[i].away_team = helper.capitalizeTheFirstLetterOfEachWord(matches[i].away_team);
+    }
     res.render("admin/score", {
         matches: matches,
     });
