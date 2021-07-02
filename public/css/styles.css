@@ -20,6 +20,11 @@
     min-width: 100%;
 }
 
+thead tr {
+  position: sticky;
+  top: 48px;
+}
+
 .tiny-leaderboard thead tr {
     background-color: #F5F3F1;
     color: #393939;
