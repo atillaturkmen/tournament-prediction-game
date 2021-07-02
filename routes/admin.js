@@ -58,6 +58,9 @@ router.get("/admin/score", async (req, res) => {
 
 router.get("/admin/score/:match_id", async (req, res) => {
     let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
     let match = await db_utils.getMatchById(match_id);
     if (match.home_goals_first_half != null) {
         return res.render("message", { message: "This match already has score information." });
@@ -143,6 +146,9 @@ router.post("/admin/match", async (req, res) => {
 
 router.post("/admin/score/:match_id", async (req, res) => {
     let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
     // Do not allow modification on scored matches
     let match = await db_utils.getMatchById(match_id);
     if (match.home_goals_first_half != null) {
