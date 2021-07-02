@@ -138,6 +138,7 @@ body {
     }
 
     .tiny-navbar-menu .fa-bars {
+        pointer-events:none;
         font-size: 2rem;
         color: #393939
     }
