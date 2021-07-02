@@ -12,6 +12,9 @@ body {
     margin: 0;
     height: 48px;
     margin-bottom: 50px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .navbar div {
@@ -106,7 +109,7 @@ body {
     display: none;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 649px) {
   
     .navbar {
         display: none;
@@ -121,6 +124,9 @@ body {
         color: #393939;
         margin: 0;
         height: 48px;
+        position: sticky;
+        top: 0;
+        z-index: 1;
     }
 
     .tiny-navbar-left {
@@ -140,7 +146,7 @@ body {
     .tiny-navbar-menu .fa-bars {
         pointer-events:none;
         font-size: 2rem;
-        color: #393939
+        color: #393939;
     }
 
     .hmbrgr-menu {
@@ -152,38 +158,28 @@ body {
         cursor: pointer;
     }
 
-    .hmbrgr-menu:hover, .hmbrgr-menu:focus {
-        background-color: #393939;
-        color: #F5F3F1;
-    }
-
-    .hmbrgr-menu:hover > i,
-    .hmbrgr-menu:focus > i {
-        color: #F5F3F1;
-        position: absolute;
-        right: 8px;
-        top: 8px;
-    }
-
     .dropdown-content {
         display: none;
         position: absolute;
         right: 0;
-        background-color: #393939;
+        background-color: #e4e4e4;
         min-width: 160px;
         z-index: 1;
         text-align: right;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       }
 
       .dropdown-content a {
         display: block;
         text-decoration: none;
-        color: #F5F3F1;
+        color: #393939;
         padding: 12px 16px;
+        border-bottom: #878787 solid 1px;
+        
       }
 
       .dropdown-content a:hover {
-        background-color: #2b2b2b;
+        background-color: #F5F3F1;
       }
 
       .show {display:block;}
