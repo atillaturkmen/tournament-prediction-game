@@ -109,7 +109,7 @@ body {
     display: none;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 649px) {
   
     .navbar {
         display: none;
