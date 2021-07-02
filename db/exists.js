@@ -29,3 +29,9 @@ exports.matchExists = async function (id) {
     let result = await query("SELECT * FROM match WHERE id = ?;", [id]);
     return result.length != 0;
 };
+
+// Returns true if match exists in db
+exports.guessExists = async function (match_id, username) {
+    let result = await query("SELECT * FROM score_guess INNER JOIN user ON user.id = score_guess.user_id WHERE user.username = ? and score_guess.match_id = ?;", [username, match_id]);
+    return result.length != 0;
+};
