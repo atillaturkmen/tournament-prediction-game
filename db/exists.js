@@ -23,3 +23,9 @@ exports.tournamentExists = async function (name) {
     let result = await query("SELECT * FROM tournament WHERE name = ?;", [name]);
     return result.length != 0;
 };
+
+// Returns true if match exists in db
+exports.matchExists = async function (id) {
+    let result = await query("SELECT * FROM match WHERE id = ?;", [id]);
+    return result.length != 0;
+};
