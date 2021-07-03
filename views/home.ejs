@@ -55,9 +55,9 @@
             <tbody>
                 <% for (var i = 0; i < topTen.length; i++) { %>
                 <tr>
-                    <td><%= i+1 %></td>
-                    <td><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
-                    <td><%= topTen[i].points%></td>
+                    <td class="rank-column"><%= i+1 %></td>
+                    <td class="username-column"><a href = "/user/<%= topTen[i].username %>"><%= topTen[i].username %></a></td>
+                    <td class="points-column"><%= topTen[i].points%></td>
                 </tr>
                 <% } %>
             </tbody>
