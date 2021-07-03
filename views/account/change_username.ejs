@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<%- include('../header'); -%>
+<%- include('../partials/header'); -%>
 
 <head>
     <title>Kullanıcı Adı Değiştir</title>
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <%- include('../navbar'); -%>
+    <%- include('../partials/navbar'); -%>
     <br>
     <form action="/account/change_username" method="POST" class="login-form text-center">
         <input type="text" name="new_username" placeholder="Yeni Kullanıcı Adı" autocomplete="off" required>

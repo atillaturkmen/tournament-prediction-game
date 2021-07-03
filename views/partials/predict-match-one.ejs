@@ -1,0 +1,29 @@
+<!-- predict -->
+<div class="predict-match">
+    <div class="match-time"><%= match.date %> <br> <%= match.hour %></div>
+    <div class="teams">
+        <!-- home-team --> <%= match.home_team %> &nbsp <img src=<%= match.home_team_logo %> alt="">
+        &nbsp &nbsp - &nbsp &nbsp
+        <!-- away-team --> <img src=<%= match.away_team_logo %> alt=""> &nbsp <%= match.away_team %>
+    </div>
+    <div class="tahmin-et-buton"> <a href=<%= "/tahmin-et/" + match.id %>><%= link_text %></a> </div>
+    <!-- <div class="tahminleri-gör-buton"> <a href="">Tahminleri Gör</a> </div> -->
+</div>
+<!-- predict-end -->
+
+<!-- tiny-predict -->
+<div class="tiny-predict-match">
+    <div class="tiny-predict-match-first-row">
+        <div class="tiny-match-time"><%= match.date %> <br> <%= match.hour %></div>
+        <div class="tiny-teams">
+            <!-- home-team --> <%= match.home_team %> &nbsp <img src=<%= match.home_team_logo %> alt="">
+            &nbsp - &nbsp
+            <!-- away-team --> <img src=<%= match.away_team_logo %> alt=""> &nbsp <%= match.away_team %>
+        </div>
+    </div>
+    <div class="tiny-predict-match-second-row">
+        <div class="tiny-tahmin-et-buton"> <a href=<%= "/tahmin-et/" + match.id %>><%= link_text %></a> </div>
+    <!-- <div class="tahminleri-gör-buton"> <a href="">Tahminleri Gör</a> </div> -->
+    </div>
+</div>
+<!-- tiny-predict-end -->
