@@ -186,4 +186,27 @@ thead tr {
     .team-name {
         display: none;
     }
+
+    .user-predictions {
+        font-size: 0.75rem;
+
+    }
+
+    .tahmin img {
+        height: 24px;
+        width: 24px;
+        margin: 0;
+    }
+
+    .points-column,
+    .iy-ms{
+        width: 24px;
+      }
+
+    .user-predictions th,
+    .user-predictions td {
+        padding: 4px 5px;
+    }
+    
+
 }
