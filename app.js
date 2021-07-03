@@ -31,6 +31,12 @@ const server = app.listen(80, () => {
     console.log(`Running on port ${server.address().port}`);
 });
 
+// Send loggedIn data to all pages
+app.use(function(req, res, next) {
+    res.locals.loggedin = req.session.loggedin;
+    next();
+});
+
 // Let routes folder handle every get and post request
 const routes = require(path.join(__dirname, "routes", "index")); // look at index.js file in routes folder
 app.get("*", routes);

@@ -20,7 +20,21 @@
         <div class="tiny-navbar-left">
         </div>
 
-        <div class="tiny-navbar-menu"> <a href="user.html"><i class="fas fa-bars"></i></a></div>
+        <div class="tiny-navbar-menu">
+            <button onclick="myFunction()" class="hmbrgr-menu"><i class="fas fa-bars"></i></button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="/">Puan Tablosu</a>
+                <a href="/tahmin-et">Tahmin Et</a>
+                <% if (loggedin) { %>
+                    <a href="/user">Hesap</a>
+                <% } else { %>
+                <a href="/account/login">Giriş Yap</a>
+                <a href="/account/register">Kaydol</a>
+                <% } %>
+            </div>
+        </div>
 
     </div>
+
+    <script src="../../public/js/dropdown.js" async defer></script>
     <!-- tiny-navbar-end -->
