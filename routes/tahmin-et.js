@@ -3,6 +3,7 @@ const express = require("express"); // import express
 const router = express.Router();
 
 const db_utils = require("../db/db-utils"); // import our database utility functions
+const helper = require("../helper");
 
 // Can not make guesses if user is not logged in
 router.use(async (req, res, next) => {
@@ -16,6 +17,7 @@ router.use(async (req, res, next) => {
 
 router.get("/tahmin-et", async (req, res) => {
     let matches = await db_utils.getEmptyMatches();
+    helper.changeDateDisplayOfMatches(matches);
     res.render("tahmin-et", {
         matches: matches,
     });
