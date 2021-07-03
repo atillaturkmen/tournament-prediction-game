@@ -5,6 +5,15 @@ const router = express.Router();
 const db_utils = require("../db/db-utils"); // import our database utility functions
 const helper = require("../helper");
 
+
+router.get("/tahmin-et", async (req, res) => {
+    let matches = await db_utils.getEmptyMatches();
+    helper.changeDateDisplayOfMatches(matches);
+    res.render("tahmin-et", {
+        matches: matches,
+    });
+});
+
 // Can not make guesses if user is not logged in
 router.use(async (req, res, next) => {
     if (!req.session.loggedin) {
@@ -13,14 +22,6 @@ router.use(async (req, res, next) => {
     } else {
         next();
     }
-});
-
-router.get("/tahmin-et", async (req, res) => {
-    let matches = await db_utils.getEmptyMatches();
-    helper.changeDateDisplayOfMatches(matches);
-    res.render("tahmin-et", {
-        matches: matches,
-    });
 });
 
 router.get("/tahmin-et/:match_id", async (req, res) => {
