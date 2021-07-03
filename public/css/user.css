@@ -14,3 +14,176 @@
     display: none;
 }
 /* navbar-end */
+
+/* buttons */
+h1 {
+    text-align: center;
+    margin: 10px auto;
+    font-size: 1.5rem;
+    padding: 10px;
+    position: sticky;
+    top: 48px;
+    background-color: #F5F3F1;
+}
+
+.button {
+    background-color: #393939;
+    margin: 0;
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 48px;
+    align-items: center;
+    border-right: #F5F3F1 solid;
+}
+
+.button:last-of-type {
+    border-right: none;
+    border-bottom: none;
+}
+
+.button a{
+    color: #F5F3F1;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 3;
+}
+
+.buttons {
+    text-align: center;
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    margin: 0 auto 50px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1100px) {
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .button {
+        border-right: none;
+        border-bottom: #F5F3F1 solid;
+        width: 270px;
+        align-self: center;
+    }
+}
+
+@media (max-width: 270px) {
+    
+    .button {
+        width: 100%;
+    }
+
+    .button a{
+        font-size: 0.75rem;
+    }
+
+    h1 {
+        font-size: 1rem;
+    }
+}
+/* buttons-end */
+
+thead tr {
+    position: sticky;
+    top: 100px;
+  }
+
+.user-predictions {
+    font-size: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.user-predictions th {
+    background-color: #F5F3F1;
+    color: #393939;
+    text-align: center;
+    font-weight: normal;
+    border-collapse: separate;
+    border-bottom: 2px solid #878787;
+  }
+
+  .user-predictions th:last-of-type {
+    font-weight: bold;
+  }
+
+  .user-predictions th,
+  .user-predictions td {
+    padding: 12px 15px;
+  }
+
+  .user-predictions td {
+    border-bottom: 1px solid #878787;
+    color: #393939;
+  }
+
+  .iy-ms {
+      width: 48px;
+  }
+
+  .points-column {
+    font-weight: bold;
+    width: 48px;
+  }
+
+  .user-predictions tbody tr:nth-of-type(even) {
+    background-color: #e4e4e4;
+  }
+
+  .user-predictions tbody tr td{
+      line-height: 4;
+  }
+
+  .tahmin-iy,
+  .tahmin-ms {
+      display: flex;
+      align-items: center;
+  }
+  
+  .tahmin-home {
+      justify-content: flex-end;
+  }
+
+  .tahmin-away {
+      justify-content: flex-start;
+  }
+
+  .tahmin-home,
+  .tahmin-away {
+      flex-grow: 1;
+      align-items: center;
+      flex-basis: 0;
+  }
+
+  .tahmin-score {
+        flex-basis: 36px;
+        justify-content: center;
+  }
+
+  .tahmin img {
+      height: 32px;
+      width: 32px;
+      margin: 0;
+  }
+
+  .tahmin div {
+      display: flex;
+  }
+
+
+@media (max-width: 850px) {
+
+    .team-name {
+        display: none;
+    }
+}
