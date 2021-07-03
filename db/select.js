@@ -82,3 +82,25 @@ exports.getMatchById = async function (id) {
 exports.getGuesses = async function (match_id) {
     return query("SELECT * FROM score_guess WHERE match_id = ?;", [match_id]);
 };
+
+// Get all guesses a user has made
+exports.getUserGuesses = async function (username) {
+    return query(`
+    SELECT
+        score_guess.*,
+        a.logo AS home_team_logo,
+        b.logo AS away_team_logo,
+        match.home_goals_first_half AS real_home_first,
+        match.home_goals_full_time AS real_home_full,
+        match.away_goals_first_half AS real_away_first,
+        match.away_goals_full_time AS real_away_full,
+        match.home_team,
+        match.away_team
+    FROM score_guess
+    INNER JOIN
+        match ON score_guess.match_id = match.id
+    INNER JOIN
+        team AS a ON match.home_team = a.name,
+        team AS b ON match.away_team = b.name
+    WHERE user_id = (SELECT id FROM user WHERE username = ?);`, [username]);
+};

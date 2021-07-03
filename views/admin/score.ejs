@@ -18,7 +18,8 @@
     <% for (var i = 0; i < matches.length; i++) { %>
         <%- include('../partials/predict-match-one', {
             match: matches[i],
-            link_text: "Gerçek Skoru Gir"
+            link_text: "Gerçek Skoru Gir",
+            link_address: "/admin/score"
         }); -%>
     <% } %>
 </body>

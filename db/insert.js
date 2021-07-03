@@ -32,5 +32,5 @@ exports.addMatchWithoutTournament = function (home_team, away_team, time) {
 
 // Adds a match to db without tournament value
 exports.addGuess = function (match_id, username, home_first, away_first, home_full, away_full) {
-    return query("INSERT INTO score_guess VALUES (?, (select id from user where username = ?), ?, ?, ?, ?);", [match_id, username, home_first, home_full, away_first, away_full]);
+    return query("INSERT INTO score_guess VALUES (?, (select id from user where username = ?), ?, ?, ?, ?, NULL);", [match_id, username, home_first, home_full, away_first, away_full]);
 };

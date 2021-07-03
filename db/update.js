@@ -37,9 +37,16 @@ exports.changeGuess = async function (match_id, username, home_first, away_first
 
 // Give points to a user
 exports.givePoint = async function (user_id, values) {
-    return query(`UPDATE user SET
+    query(`UPDATE user SET
     correct_winner_guesses = correct_winner_guesses + ?,
     correct_score_guesses = correct_score_guesses + ?,
     points = points + ?
     WHERE id = ?;`, [...values, user_id]);
+};
+
+// Set points of a user guess
+exports.givePointToGuess = async function (user_id, match_id, point) {
+    query(`UPDATE score_guess SET
+    points_earned = ?
+    WHERE user_id = ? AND match_id = ?;`, [point, user_id, match_id]);
 };
