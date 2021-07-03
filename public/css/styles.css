@@ -14,10 +14,11 @@
 /* tiny-leaderboard */
 .tiny-leaderboard {
     display: none;
-    border-collapse: collapse;
     margin: 50px auto;
     font-size: 1rem;
     min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 thead tr {
@@ -25,14 +26,12 @@ thead tr {
   top: 48px;
 }
 
-.tiny-leaderboard thead tr {
+  .tiny-leaderboard th {
+    font-weight: normal;
     background-color: #F5F3F1;
     color: #393939;
     text-align: center;
     border-bottom: 2px solid #878787;
-  }
-  .tiny-leaderboard th {
-    font-weight: normal;
   }
 
   .tiny-leaderboard th:last-of-type {
@@ -44,7 +43,7 @@ thead tr {
     padding: 12px 15px;
   }
   
-  .tiny-leaderboard tbody tr {
+  .tiny-leaderboard td {
     border-bottom: 1px solid #878787;
     text-align: center;
     color: #393939;
@@ -73,18 +72,15 @@ thead tr {
   .tiny-leaderboard tbody tr:nth-of-type(even) {
     background-color: #e4e4e4;
   }
-  
-  .tiny-leaderboard tbody tr:last-of-type {
-    border-bottom: 2px solid #878787;
-  }
 /* tiny-leaderboard-end */
 
 /* leaderboard */
 .leaderboard {
-    border-collapse: collapse;
     margin: 100px auto;
     font-size: 1.25rem;
     min-width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
   }
 
   @media (max-width: 1200px) {
@@ -112,15 +108,13 @@ thead tr {
         }
   }
 
-  .leaderboard thead tr {
+  .leaderboard th {
     background-color: #F5F3F1;
     color: #393939;
     text-align: center;
-    border-bottom: 2px solid #878787;
-  }
-  
-  .leaderboard th {
     font-weight: normal;
+    border-collapse: separate;
+    border-bottom: 2px solid #878787;
   }
 
   .leaderboard th:last-of-type {
@@ -132,7 +126,7 @@ thead tr {
     padding: 12px 15px;
   }
   
-  .leaderboard tbody tr {
+  .leaderboard td {
     border-bottom: 1px solid #878787;
     text-align: center;
     color: #393939;
@@ -151,8 +145,7 @@ thead tr {
   .leaderboard tbody tr .username-column a:hover {
     text-decoration: none;
     color: #74BD15;
-}
-
+  }
 
   .leaderboard tbody tr .points-column {
     font-weight: bold;
@@ -162,7 +155,5 @@ thead tr {
     background-color: #e4e4e4;
   }
   
-  .leaderboard tbody tr:last-of-type {
-    border-bottom: 2px solid #878787;
-  }
+
   /* leaderboard-end */
