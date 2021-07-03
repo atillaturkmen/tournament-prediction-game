@@ -9,21 +9,21 @@ router.get("/user", async (req, res) => {
     if (!req.session.loggedin) {
         res.redirect("/account/login");
     } else {
-        let points = await db_utils.getPoint(req.session.username);
-        res.render("user", {
-            username: req.session.username,
-            points: points,
-            self: true,
-        });
+        res.redirect("/user/" + req.session.username);
     }
 });
 
 router.get("/user/:username", async (req, res) => {
     let username = req.params.username;
-    let points = await db_utils.getPoint(username);
+    let guesses = await db_utils.getUserGuesses(username);
+    for (let i = 0; i < guesses.length; i++) {
+        if (guesses[i].points_earned) {
+            guesses[i].points_earned = "+" + guesses[i].points_earned;
+        }
+    }
     res.render("user", {
         username: username,
-        points: points,
+        guesses: guesses,
         self: req.session.username === username,
     });
 });

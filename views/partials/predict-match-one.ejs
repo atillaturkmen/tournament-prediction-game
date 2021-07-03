@@ -6,7 +6,7 @@
         &nbsp &nbsp - &nbsp &nbsp
         <!-- away-team --> <img src=<%= match.away_team_logo %> alt=""> &nbsp <%= match.away_team %>
     </div>
-    <div class="tahmin-et-buton"> <a href=<%= "/tahmin-et/" + match.id %>><%= link_text %></a> </div>
+    <div class="tahmin-et-buton"> <a href=<%= link_address + "/" + match.id %>><%= link_text %></a> </div>
     <!-- <div class="tahminleri-gör-buton"> <a href="">Tahminleri Gör</a> </div> -->
 </div>
 <!-- predict-end -->
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="tiny-predict-match-second-row">
-        <div class="tiny-tahmin-et-buton"> <a href=<%= "/tahmin-et/" + match.id %>><%= link_text %></a> </div>
+        <div class="tiny-tahmin-et-buton"> <a href=<%= link_address + "/" + match.id %>><%= link_text %></a> </div>
     <!-- <div class="tahminleri-gör-buton"> <a href="">Tahminleri Gör</a> </div> -->
     </div>
 </div>

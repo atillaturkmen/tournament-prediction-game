@@ -167,7 +167,9 @@ router.post("/admin/score/:match_id", async (req, res) => {
     for (let i = 0; i < guesses.length; i++) {
         let firstHalf = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
         let secondHalf = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
-        db_utils.givePoint(guesses[i].user_id, firstHalf.map((x, j) => x + secondHalf[j]));
+        let fullTime = firstHalf.map((x, j) => x + secondHalf[j]);
+        db_utils.givePoint(guesses[i].user_id, fullTime);
+        db_utils.givePointToGuess(guesses[i].user_id, guesses[i].match_id, fullTime[2]);
     }
     res.render("message", { message: "Match score and user points updated." });
 });

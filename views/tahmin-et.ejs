@@ -18,7 +18,8 @@
     <% for (var i = 0; i < matches.length; i++) { %>
         <%- include('partials/predict-match-one', {
             match: matches[i],
-            link_text: "Tahmin Et"
+            link_text: "Tahmin Et",
+            link_address: "/tahmin-et"
         }); -%>
     <% } %>
 </body>
