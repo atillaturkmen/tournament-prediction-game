@@ -61,8 +61,8 @@ CREATE TABLE IF NOT EXISTS "score_guess" (
 	"away_goals_first_half"	INTEGER,
 	"away_goals_full_time"	INTEGER NOT NULL,
 	"points_earned"	INTEGER,
-	FOREIGN KEY("match_id") REFERENCES "match"("id"),
 	PRIMARY KEY("match_id","user_id"),
-	FOREIGN KEY("user_id") REFERENCES "user"("id")
+	FOREIGN KEY("user_id") REFERENCES "user"("id"),
+	FOREIGN KEY("match_id") REFERENCES "match"("id") ON DELETE CASCADE
 );
 COMMIT;

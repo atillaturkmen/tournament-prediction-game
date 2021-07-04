@@ -5,6 +5,7 @@ module.exports = {
     ...require('./update'),
     ...require('./insert'),
     ...require('./exists'),
+    ...require('./delete'),
     wrongPass: async function (username, pass, res) {
         let password = await this.getPassword(username);
         let pass_check = await bcrypt.compare(pass, password);

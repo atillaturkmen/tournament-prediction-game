@@ -83,6 +83,17 @@ router.get("/admin/delete_score/:match_id", async (req, res) => {
     res.render("message", { message: "Maç skoru silinmiş olmalı." });
 });
 
+router.get("/admin/delete_match/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
+    let guesses = await db_utils.getGuesses(match_id);
+    subtractPoints(guesses);
+    await db_utils.deleteMatch(match_id);
+    res.render("message", { message: "Deleted match." });
+});
+
 // ---------- POST request handlers -----------
 
 router.post("/admin/add", async (req, res) => {
