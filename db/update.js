@@ -44,6 +44,15 @@ exports.givePoint = async function (user_id, values) {
     WHERE id = ?;`, [...values, user_id]);
 };
 
+// Give points to a user
+exports.subtractPoint = async function (user_id, values) {
+    query(`UPDATE user SET
+    correct_winner_guesses = correct_winner_guesses - ?,
+    correct_score_guesses = correct_score_guesses - ?,
+    points = points - ?
+    WHERE id = ?;`, [...values, user_id]);
+};
+
 // Set points of a user guess
 exports.givePointToGuess = async function (user_id, match_id, point) {
     query(`UPDATE score_guess SET

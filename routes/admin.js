@@ -61,9 +61,6 @@ router.get("/admin/score/:match_id", async (req, res) => {
         return res.render("message", { message: "This match id is not in database." });
     }
     let match = await db_utils.getMatchById(match_id);
-    if (match.home_goals_first_half != null) {
-        return res.render("message", { message: "This match already has score information." });
-    }
     res.render("admin/score-form", {
         match: match,
     });
@@ -152,9 +149,39 @@ router.post("/admin/score/:match_id", async (req, res) => {
         return res.render("message", { message: "This match id is not in database." });
     }
     // Do not allow modification on scored matches
+    let guesses = await db_utils.getGuesses(match_id);
     let match = await db_utils.getMatchById(match_id);
     if (match.home_goals_first_half != null) {
-        return res.render("message", { message: "This match already has score information." });
+        // Here the points earned for each user by that match will be reset and recalculated below
+        for (let i = 0; i < guesses.length; i++) {
+            let correct_score = 0;
+            let correct_winner = 0;
+            switch (guesses[i].points_earned) {
+                case 10:
+                    correct_score = 2;
+                    correct_winner = 0;
+                    break;
+                case 7:
+                    correct_score = 1;
+                    correct_winner = 1;
+                    break;
+                case 5:
+                    correct_score = 1;
+                    correct_winner = 0;
+                    break;
+                case 4:
+                    correct_score = 0;
+                    correct_winner = 2;
+                    break;
+                case 2:
+                    correct_score = 0;
+                    correct_winner = 1;
+                    break;
+                default:
+                    break;
+            }
+            db_utils.subtractPoint(guesses[i].user_id, [correct_winner, correct_score, guesses[i].points_earned]);
+        }
     }
     // Put to db
     let home_first_real = req.body.home_first_half;
@@ -163,7 +190,6 @@ router.post("/admin/score/:match_id", async (req, res) => {
     let away_full_real = req.body.away_full_time;
     db_utils.enterScore(match_id, home_first_real, away_first_real, home_full_real, away_full_real);
     // Update user points
-    let guesses = await db_utils.getGuesses(match_id);
     for (let i = 0; i < guesses.length; i++) {
         let firstHalf = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
         let secondHalf = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
