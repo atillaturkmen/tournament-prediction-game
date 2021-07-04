@@ -26,7 +26,7 @@
     "ejs": "^3.1.6",
     "express": "^5.0.0-alpha.8",
     "express-session": "^1.17.2",
-    "memorystore": "^1.6.6",
+    "express-session-sqlite": "^2.0.10",
     "path": "^0.12.7",
     "sqlite3": "^5.0.2"
   }

@@ -1,7 +1,8 @@
 const express = require("express"); // framework for nodejs
 const path = require("path"); // useful for joining file paths
 const session = require('express-session'); // keeps sessions
-const MemoryStore = require('memorystore')(session); // default store leaks memory
+const sqlite3 = require('sqlite3').verbose();
+const SqliteStore = require("express-session-sqlite").default(session);
 require('dotenv').config(); // read environment variables from .env
 
 const app = express(); // create express app
@@ -16,9 +17,19 @@ app.use(express.urlencoded({
 
 // initialize session values
 app.use(session({
-    // use memory store, default store leaks memory
-    store: new MemoryStore({
-        checkPeriod: 86400000 // prune expired entries every 24h
+    // use sqlite store, default store leaks memory
+    store: new SqliteStore({
+        // Database library to use. Any library is fine as long as the API is compatible
+        // with sqlite3, such as sqlite3-offline
+        driver: sqlite3.Database,
+        // for in-memory database
+        // path: ':memory:'
+        path: process.env.db_path,
+        // Session TTL in milliseconds
+        ttl: 86400000 * 30, // 30 days
+        // (optional) Adjusts the cleanup timer in milliseconds for deleting expired session rows.
+        // Default is 5 minutes.
+        cleanupInterval: 86400000
     }),
     secret: process.env.secret,
     resave: false,
