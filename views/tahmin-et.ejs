@@ -16,11 +16,20 @@
         <p style="text-align: center;">No upcoming matches.</p>
     <% } %>
     <% for (var i = 0; i < matches.length; i++) { %>
-        <%- include('partials/predict-match-one', {
-            match: matches[i],
-            link_text: "Tahmin Et",
-            link_address: "/tahmin-et"
-        }); -%>
+        <!-- predict -->
+        <div class="predict-match">
+            <%- include('partials/predict', { match: matches[i] }); -%>
+            <div class="tahmin-et-buton"> <a href=<%= "/tahmin-et/" + matches[i].id %>>Tahmin Et</a> </div>
+        </div>
+        <!-- predict-end -->
+        <!-- tiny-predict -->
+        <div class="tiny-predict-match">
+            <%- include('partials/tiny-predict', { match: matches[i] }); -%>
+            <div class="tiny-predict-match-second-row">
+                <div class="tiny-tahmin-et-buton"> <a href=<%= "/tahmin-et/" + matches[i].id %>>Tahmin Et</a> </div>
+            </div>
+        </div>
+        <!-- tiny-predict-end -->
     <% } %>
 </body>
 
