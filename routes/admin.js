@@ -1,5 +1,6 @@
 // These two have to be in all router files
 const express = require("express"); // import express
+const { subtractPoint } = require("../db/db-utils");
 const router = express.Router();
 
 const db_utils = require("../db/db-utils"); // import our database utility functions
@@ -64,6 +65,22 @@ router.get("/admin/score/:match_id", async (req, res) => {
     res.render("admin/score-form", {
         match: match,
     });
+});
+
+router.get("/admin/delete_score/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
+    let match = await db_utils.getMatchById(match_id);
+    if (match.home_goals_first_half == null) {
+        return res.render("message", { message: "Bu maçın zaten skoru yok." });
+    }
+    let guesses = await db_utils.getGuesses(match_id);
+    subtractPoints(guesses);
+    db_utils.enterScore(match_id, null, null, null, null);
+    db_utils.nullifyEarnedFromMatch(match_id);
+    res.render("message", { message: "Maç skoru silinmiş olmalı." });
 });
 
 // ---------- POST request handlers -----------
@@ -148,40 +165,11 @@ router.post("/admin/score/:match_id", async (req, res) => {
     if (!await db_utils.matchExists(match_id)) {
         return res.render("message", { message: "This match id is not in database." });
     }
-    // Do not allow modification on scored matches
     let guesses = await db_utils.getGuesses(match_id);
     let match = await db_utils.getMatchById(match_id);
     if (match.home_goals_first_half != null) {
         // Here the points earned for each user by that match will be reset and recalculated below
-        for (let i = 0; i < guesses.length; i++) {
-            let correct_score = 0;
-            let correct_winner = 0;
-            switch (guesses[i].points_earned) {
-                case 10:
-                    correct_score = 2;
-                    correct_winner = 0;
-                    break;
-                case 7:
-                    correct_score = 1;
-                    correct_winner = 1;
-                    break;
-                case 5:
-                    correct_score = 1;
-                    correct_winner = 0;
-                    break;
-                case 4:
-                    correct_score = 0;
-                    correct_winner = 2;
-                    break;
-                case 2:
-                    correct_score = 0;
-                    correct_winner = 1;
-                    break;
-                default:
-                    break;
-            }
-            db_utils.subtractPoint(guesses[i].user_id, [correct_winner, correct_score, guesses[i].points_earned]);
-        }
+        subtractPoints(guesses);
     }
     // Put to db
     let home_first_real = req.body.home_first_half;
@@ -201,10 +189,42 @@ router.post("/admin/score/:match_id", async (req, res) => {
 });
 
 function calculatePoint(a, b, c, d) {
-    if (a == c && b == d) return [0, 1, 5]; // correct score
-    if ((a - b) * (c - d) > 0) return [1, 0, 2]; // correct winner
+    if (a == c && b == d) return [0, 1, 5];             // correct score
+    if ((a - b) * (c - d) > 0) return [1, 0, 2];        // correct winner
     if ((a - b) == 0 && (c - d) == 0) return [1, 0, 2]; // correct winner
-    return [0, 0, 0]; // incorrect
+    return [0, 0, 0];                                   // incorrect
+}
+
+function subtractPoints(guesses) {
+    for (let i = 0; i < guesses.length; i++) {
+        let correct_score = 0;
+        let correct_winner = 0;
+        switch (guesses[i].points_earned) {
+            case 10:
+                correct_score = 2;
+                correct_winner = 0;
+                break;
+            case 7:
+                correct_score = 1;
+                correct_winner = 1;
+                break;
+            case 5:
+                correct_score = 1;
+                correct_winner = 0;
+                break;
+            case 4:
+                correct_score = 0;
+                correct_winner = 2;
+                break;
+            case 2:
+                correct_score = 0;
+                correct_winner = 1;
+                break;
+            default:
+                break;
+        }
+        db_utils.subtractPoint(guesses[i].user_id, [correct_winner, correct_score, guesses[i].points_earned]);
+    }
 }
 
 module.exports = router; // this line is needed for importing, necessary for all router files

@@ -25,7 +25,7 @@ exports.enterScore = async function (match_id, home_first, away_first, home_full
     WHERE id = ?;`, [home_first, away_first, home_full, away_full, match_id]);
 };
 
-// Update logo of a team
+// Update guess of one match by one user
 exports.changeGuess = async function (match_id, username, home_first, away_first, home_full, away_full) {
     return query(`UPDATE score_guess SET
     home_goals_first_half = ?,
@@ -33,6 +33,13 @@ exports.changeGuess = async function (match_id, username, home_first, away_first
     home_goals_full_time = ?,
     away_goals_full_time = ?
     WHERE match_id = ? AND user_id = (select id from user where username = ?);`, [home_first, away_first, home_full, away_full, match_id, username]);
+};
+
+// Set points earned from a match to null
+exports.nullifyEarnedFromMatch = async function (match_id) {
+    return query(`UPDATE score_guess SET
+    points_earned = NULL
+    WHERE match_id = ?;`, [match_id]);
 };
 
 // Give points to a user

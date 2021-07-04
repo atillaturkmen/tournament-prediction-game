@@ -21,6 +21,7 @@
             <%- include('../partials/predict', { match: matches[i] }); -%>
             <% if (matches[i].home_goals_full_time != null) { %>
                 <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Değiştir</a> </div>
+                <div class="tahmin-et-buton"> <a href=<%= "/admin/delete_score/" + matches[i].id %>>Skoru Sıfırla</a> </div>
             <%} else { %>
                 <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Gir</a> </div>
             <% } %>
@@ -35,6 +36,7 @@
             <div class="tiny-predict-match-second-row">
                 <% if (matches[i].home_goals_full_time != null) { %>
                     <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Değiştir</a> </div>
+                    <div class="tahmin-et-buton"> <a href=<%= "/admin/delete_score/" + matches[i].id %>>Skoru Sıfırla</a> </div>
                 <%} else { %>
                     <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Gir</a> </div>
                 <% } %>
