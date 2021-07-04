@@ -2,7 +2,7 @@
     <div class="tiny-match-time"><%= match.date %> <br> <%= match.hour %></div>
     <div class="tiny-teams">
         <!-- home-team --> <%= match.home_team %> &nbsp <img src=<%= match.home_team_logo %> alt="">
-        &nbsp - &nbsp
+        &nbsp <%= match.home_goals_full_time %> &nbsp - &nbsp <%= match.away_goals_full_time %> &nbsp
         <!-- away-team --> <img src=<%= match.away_team_logo %> alt=""> &nbsp <%= match.away_team %>
     </div>
 </div>

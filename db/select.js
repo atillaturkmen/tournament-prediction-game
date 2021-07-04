@@ -63,6 +63,22 @@ exports.getEmptyMatches = async function () {
         datetime(time) ASC;`);
 };
 
+// Get all matches with team logos
+exports.getAllMatches = async function () {
+    return query(`
+    SELECT
+        match.*,
+        a.logo AS home_team_logo,
+        b.logo AS away_team_logo
+    FROM
+        match
+    INNER JOIN
+        team AS a ON match.home_team = a.name,
+        team AS b ON match.away_team = b.name
+    ORDER BY
+        datetime(time) DESC;`);
+};
+
 // Get match information and team logos by id
 exports.getMatchById = async function (id) {
     let result = await query(`

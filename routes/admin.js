@@ -48,7 +48,7 @@ router.get("/admin/match", async (req, res) => {
 });
 
 router.get("/admin/score", async (req, res) => {
-    let matches = await db_utils.getEmptyMatches();
+    let matches = await db_utils.getAllMatches();
     helper.changeDateDisplayOfMatches(matches);
     res.render("admin/score", {
         matches: matches,

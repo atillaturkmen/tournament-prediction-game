@@ -19,14 +19,28 @@
         <!-- predict -->
         <div class="predict-match">
             <%- include('../partials/predict', { match: matches[i] }); -%>
-            <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Gerçek Skoru Gir</a> </div>
+            <% if (matches[i].home_goals_full_time != null) { %>
+                <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Değiştir</a> </div>
+            <%} else { %>
+                <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Gir</a> </div>
+            <% } %>
+            <div class="tahmin-et-buton"> <a href=<%= "/admin/match/" + matches[i].id %>>Maç Bilgisini Değiştir</a> </div>
+            <div class="tahmin-et-buton"> <a href=<%= "/admin/delete_match/" + matches[i].id %>  style="color: red;"
+                onclick="return confirm('Maçı silmek istediğine emin misin? Bu maçtan kazanlıan puanlar geri alınacak.')">Maçı Sil</a> </div>
         </div>
         <!-- predict-end -->
         <!-- tiny-predict -->
         <div class="tiny-predict-match">
             <%- include('../partials/tiny-predict', { match: matches[i] }); -%>
             <div class="tiny-predict-match-second-row">
-                <div class="tiny-tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Gerçek Skoru Gir</a> </div>
+                <% if (matches[i].home_goals_full_time != null) { %>
+                    <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Değiştir</a> </div>
+                <%} else { %>
+                    <div class="tahmin-et-buton"> <a href=<%= "/admin/score/" + matches[i].id %>>Skoru Gir</a> </div>
+                <% } %>
+                <div class="tahmin-et-buton"> <a href=<%= "/admin/match/" + matches[i].id %>>Maç Bilgisini Değiştir</a> </div>
+                <div class="tahmin-et-buton"> <a href=<%= "/admin/delete_match/" + matches[i].id %>  style="color: red;"
+                    onclick="return confirm('Maçı silmek istediğine emin misin? Bu maçtan kazanlıan puanlar geri alınacak.')">Maçı Sil</a> </div>
             </div>
         </div>
         <!-- tiny-predict-end -->
