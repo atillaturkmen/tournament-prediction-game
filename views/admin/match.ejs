@@ -15,15 +15,31 @@
 <body>
 	<%- include('../partials/navbar'); -%>
 	<div class="login-form text-center">
-		<h1>Add Match</h1>
+		<% if (locals.match) { %>
+			<h1>Update Match</h1>
+		<% } else { %>
+			<h1>Add Match</h1>
+		<% } %>
 		<form action="/admin/match" method="POST" autocomplete="off">
 			<div class="autocomplete" style="width:300px;">
-				<input id="home_team" type="text" name="home_team" placeholder="Home Team" required>
-				<input id="away_team" type="text" name="away_team" placeholder="Away Team" required>
-				<input id="time" type="datetime-local" name="time" placeholder="Time" required>
-				<input id="in_tournament" type="text" name="in_tournament" placeholder="Tournament">
+				<input id="home_team" type="text" name="home_team" placeholder="Home Team"<% if (locals.match) { %>
+					value=<%= match.home_team %>
+				<% } %> required>
+				<input id="away_team" type="text" name="away_team" placeholder="Away Team"<% if (locals.match) { %>
+					value=<%= match.away_team %>
+				<% } %> required>
+				<input id="time" type="datetime-local" name="time" placeholder="Time"<% if (locals.match) { %>
+					value=<%= match.time.split(" ").join("T") %>
+				<% } %> required>
+				<input id="in_tournament" type="text" name="in_tournament" placeholder="Tournament"<% if (locals.match) { %>
+					value=<%= match.in_tournament %>
+				<% } %>>
 			</div>
-			<button type="submit">Add</button>
+			<button type="submit"><% if (locals.match) { %>
+				Update
+			<% } else { %>
+				Add
+			<% } %></button>
 			<a href="/admin" style="float:right">Go back to admin panel</a>
 		</form>
 		<br>

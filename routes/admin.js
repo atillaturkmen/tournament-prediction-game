@@ -48,6 +48,22 @@ router.get("/admin/match", async (req, res) => {
     });
 });
 
+router.get("/admin/match/:match_id", async (req, res) => {
+    let match_id = req.params.match_id;
+    if (!await db_utils.matchExists(match_id)) {
+        return res.render("message", { message: "This match id is not in database." });
+    }
+    Promise.all([db_utils.getRowCount("match"), db_utils.getAllTournaments(), db_utils.getAllTeams(), db_utils.getMatchById(match_id)]).then((values) => {
+        let matchCount = values[0];
+        res.render("admin/match", {
+            matchCount: matchCount,
+            tournaments: JSON.stringify(values[1]),
+            teams: JSON.stringify(values[2]),
+            match: values[3],
+        });
+    });
+});
+
 router.get("/admin/score", async (req, res) => {
     let matches = await db_utils.getAllMatches();
     helper.changeDateDisplayOfMatches(matches);
