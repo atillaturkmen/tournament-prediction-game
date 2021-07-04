@@ -20,7 +20,11 @@
 		<% } else { %>
 			<h1>Add Match</h1>
 		<% } %>
-		<form action="/admin/match" method="POST" autocomplete="off">
+		<form <% if (locals.match) { %>
+				action=<%= "/admin/match?id=" + match.id %>
+			<% } else { %>
+				action="/admin/match/"
+			<% } %> method="POST" autocomplete="off">
 			<div class="autocomplete" style="width:300px;">
 				<input id="home_team" type="text" name="home_team" placeholder="Home Team"<% if (locals.match) { %>
 					value=<%= match.home_team %>

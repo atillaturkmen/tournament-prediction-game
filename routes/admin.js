@@ -176,14 +176,18 @@ router.post("/admin/match", async (req, res) => {
     }
     // Tournament checks
     if (tournament == "") {
-        db_utils.addMatchWithoutTournament(home_team, away_team, time);
+        tournament = null;
     } else if (!await db_utils.tournamentExists(tournament)) {
         return res.render("message", { message: "This tournament does not exist in database." });
-    } else {
-        db_utils.addMatchWithTournament(home_team, away_team, time, tournament);
     }
-
-    res.render("message", { message: "Match added." });
+    let id = req.query.id;
+    if (id) {
+        await db_utils.changeMatch(id, home_team, away_team, time, tournament);
+        res.render("message", { message: "Match info updated." });
+    } else {
+        await db_utils.addMatch(home_team, away_team, time, tournament);
+        res.render("message", { message: "Match added." });
+    }
 });
 
 // Update final score of match, give users their points

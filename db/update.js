@@ -11,8 +11,13 @@ exports.changePassword = function (newPass, username) {
 };
 
 // Update logo of a team
-exports.changeLogo = async function (name, logo) {
+exports.changeLogo = function (name, logo) {
     return query("UPDATE team SET logo = ? WHERE name = ?;", [logo, name]);
+};
+
+// Update match info
+exports.changeMatch = function (match_id, home_team, away_team, time, tournament) {
+    return query("UPDATE match SET home_team = ?, away_team = ?, time = ?, in_tournament = ? WHERE id = ?;", [home_team, away_team, time, tournament, match_id]);
 };
 
 // Update score of a match

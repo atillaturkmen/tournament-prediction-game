@@ -21,13 +21,8 @@ exports.addTournament = function (name) {
 };
 
 // Adds a match to db with tournament value
-exports.addMatchWithTournament = function (home_team, away_team, time, tournament) {
+exports.addMatch = function (home_team, away_team, time, tournament) {
     return query("INSERT INTO match (home_team, away_team, time, in_tournament) VALUES (?, ?, ?, ?);", [home_team, away_team, time ,tournament]);
-};
-
-// Adds a match to db without tournament value
-exports.addMatchWithoutTournament = function (home_team, away_team, time) {
-    return query("INSERT INTO match (home_team, away_team, time) VALUES (?, ?, ?);", [home_team, away_team, time]);
 };
 
 // Adds a match to db without tournament value
