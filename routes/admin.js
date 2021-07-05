@@ -203,16 +203,28 @@ router.post("/admin/score/:match_id", async (req, res) => {
         subtractPoints(guesses);
     }
     // Put to db
-    let home_first_real = req.body.home_first_half;
-    let away_first_real = req.body.away_first_half;
-    let home_full_real = req.body.home_full_time;
-    let away_full_real = req.body.away_full_time;
+    let home_first_real = req.body.home_first_half || null;
+    let away_first_real = req.body.away_first_half || null;
+    let home_full_real = req.body.home_full_time || null;
+    let away_full_real = req.body.away_full_time || null;
+    if (!((home_first_real && away_first_real) || (home_full_real && away_full_real))) {
+        return res.render("message", { message: "Enter first half or full time." });
+    }
     db_utils.enterScore(match_id, home_first_real, away_first_real, home_full_real, away_full_real);
     // Update user points
+    let enteredFirstHalf = !!home_first_real;
+    let enteredFullTime = !!home_full_real;
     for (let i = 0; i < guesses.length; i++) {
-        let firstHalf = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
-        let secondHalf = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
-        let fullTime = firstHalf.map((x, j) => x + secondHalf[j]);
+        let fullTime;
+        if (enteredFirstHalf) {
+            fullTime = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
+        } else if (enteredFullTime) {
+            fullTime = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
+        } else {
+            let firstHalf = calculatePoint(guesses[i].home_goals_first_half, guesses[i].away_goals_first_half, home_first_real, away_first_real);
+            let secondHalf = calculatePoint(guesses[i].home_goals_full_time, guesses[i].away_goals_full_time, home_full_real, away_full_real);
+            fullTime = firstHalf.map((x, j) => x + secondHalf[j]);
+        }
         db_utils.givePoint(guesses[i].user_id, fullTime);
         db_utils.givePointToGuess(guesses[i].user_id, guesses[i].match_id, fullTime[2]);
     }
@@ -220,6 +232,7 @@ router.post("/admin/score/:match_id", async (req, res) => {
 });
 
 function calculatePoint(a, b, c, d) {
+    if (a == null || b == null) return [0, 0, 0];       // no guess
     if (a == c && b == d) return [0, 1, 5];             // correct score
     if ((a - b) * (c - d) > 0) return [1, 0, 2];        // correct winner
     if ((a - b) == 0 && (c - d) == 0) return [1, 0, 2]; // correct winner

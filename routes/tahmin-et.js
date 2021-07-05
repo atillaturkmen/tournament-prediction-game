@@ -40,10 +40,13 @@ router.post("/tahmin-et/:match_id", async (req, res) => {
     if (!await db_utils.matchExists(match_id)) {
         return res.render("message", { message: "This match id is not in database." });
     }
-    let home_first = req.body.home_first_half;
-    let away_first = req.body.away_first_half;
-    let home_full = req.body.home_full_time;
-    let away_full = req.body.away_full_time;
+    let home_first = req.body.home_first_half || null;
+    let away_first = req.body.away_first_half || null;
+    let home_full = req.body.home_full_time || null;
+    let away_full = req.body.away_full_time || null;
+    if (!((home_first && away_first) || (home_full && away_full))) {
+        return res.render("message", { message: "Guess first half or full time." });
+    }
     let username = req.session.username;
     if (await db_utils.guessExists(match_id, username)) {
         await db_utils.changeGuess(match_id, username, home_first, away_first, home_full, away_full);
