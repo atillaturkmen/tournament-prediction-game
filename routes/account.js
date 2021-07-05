@@ -53,6 +53,9 @@ router.post("/account/signup", async (req, res) => {
     let username_input = req.body.username;
     let password_input = req.body.password.toString();
     let password_confirm = req.body.password_confirm.toString();
+    if (!username_input || !password_input || !password_confirm) {
+        return res.render("message", { message: "Fill the required parts." });
+    }
     // Check confirm password
     if (password_confirm != password_input) {
         return res.render("message", { message: "Passwords don't match." });
@@ -75,6 +78,10 @@ router.post("/account/auth", async (req, res) => {
     let username_input = req.body.username;
     let password_input = req.body.password.toString();
 
+    if (!username_input || !password_input) {
+        return res.render("message", { message: "Fill the required parts." });
+    }
+
     // Check the db if username exists
     let usernameExists = await db_utils.usernameExists(username_input);
     if (!usernameExists) {
@@ -95,6 +102,10 @@ router.post("/account/change_username", async (req, res) => {
     let new_username = req.body.new_username;
     let password_input = req.body.password.toString();
 
+    if (!new_username || !password_input) {
+        return res.render("message", { message: "Fill the required parts." });
+    }
+
     if (!req.session.loggedin) {
         res.redirect("/account/login");
     } else {
@@ -111,6 +122,10 @@ router.post("/account/change_password", async (req, res) => {
     let old_password = req.body.old_password;
     let new_password = req.body.new_password.toString();
     let confirm_new_password = req.body.confirm_new_password.toString();
+
+    if (!old_password || !new_password || !confirm_new_password) {
+        return res.render("message", { message: "Fill the required parts." });
+    }
 
     if (!req.session.loggedin) {
         res.redirect("/account/login");
