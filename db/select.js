@@ -123,5 +123,7 @@ exports.getUserGuesses = async function (username) {
     INNER JOIN
         team AS a ON match.home_team = a.name,
         team AS b ON match.away_team = b.name
-    WHERE user_id = (SELECT id FROM user WHERE username = ?);`, [username]);
+    WHERE user_id = (SELECT id FROM user WHERE username = ?)
+    ORDER BY
+        datetime(match.time) ASC;`, [username]);
 };
