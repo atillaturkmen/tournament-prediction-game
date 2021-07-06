@@ -20,6 +20,8 @@ router.get("/user/:username", async (req, res) => {
         if (guesses[i].points_earned) {
             guesses[i].points_earned = "+" + guesses[i].points_earned;
         }
+        guesses[i].time = guesses[i].time.split(" ").join("T");
+        guesses[i].show = (req.session.username === username) || (new Date(guesses[i].time) - 3600000 < new Date());
     }
     res.render("user", {
         username: username,

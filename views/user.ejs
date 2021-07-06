@@ -46,6 +46,7 @@
                     iy_away: guesses[i].away_goals_first_half,
                     ms_home: guesses[i].home_goals_full_time,
                     ms_away: guesses[i].away_goals_full_time,
+                    show: guesses[i].show,
                 }); -%>
                 <%- include('partials/finished-match', {
                     home_team: guesses[i].home_team,
@@ -56,6 +57,7 @@
                     iy_away: guesses[i].real_away_first,
                     ms_home: guesses[i].real_home_full,
                     ms_away: guesses[i].real_away_full,
+                    show: true,
                 }); -%>
                 <td class="points-column"><%= guesses[i].points_earned %></td>
             </tr>

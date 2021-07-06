@@ -116,7 +116,8 @@ exports.getUserGuesses = async function (username) {
         match.away_goals_first_half AS real_away_first,
         match.away_goals_full_time AS real_away_full,
         match.home_team,
-        match.away_team
+        match.away_team,
+        match.time
     FROM score_guess
     INNER JOIN
         match ON score_guess.match_id = match.id
