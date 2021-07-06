@@ -10,11 +10,12 @@ exports.capitalizeTheFirstLetterOfEachWord = function (words) {
 exports.changeDateDisplayOfMatches = function (matches) {
     for (let i = 0; i < matches.length; i++) {
         let date = matches[i].time.split(" ")[0];
-        let time = matches[i].time.split(" ")[1];
+        let hour = matches[i].time.split(" ")[1];
         date = date.split("-").reverse().join(".");
         date = date.slice(0, 5) + "."  + date.slice(8);
-        time = time.replace(":", ".");
+        hour = hour.replace(":", ".");
         matches[i].date = date;
-        matches[i].hour = time;
+        matches[i].hour = hour;
+        matches[i].time = matches[i].time.split(" ").join("T");
     }
 };

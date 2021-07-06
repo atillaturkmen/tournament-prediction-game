@@ -30,6 +30,10 @@ router.get("/tahmin-et/:match_id", async (req, res) => {
         return res.render("message", { message: "This match id is not in database." });
     }
     let match = await db_utils.getMatchById(match_id);
+    match.time = match.time.split(" ").join("T");
+    if (new Date(match.time) - 3600000 < new Date()) {
+        return res.render("message", { message: "Tahminler kapandı." });
+    }
     res.render("tahmin-et-form", {
         match: match,
     });
@@ -39,6 +43,11 @@ router.post("/tahmin-et/:match_id", async (req, res) => {
     let match_id = req.params.match_id;
     if (!await db_utils.matchExists(match_id)) {
         return res.render("message", { message: "This match id is not in database." });
+    }
+    let match = await db_utils.getMatchById(req.params.match_id);
+    match.time = match.time.split(" ").join("T");
+    if (new Date(match.time) - 3600000 < new Date()) {
+        return res.render("message", { message: "Tahminler kapandı." });
     }
     let home_first = req.body.home_first_half || null;
     let away_first = req.body.away_first_half || null;
