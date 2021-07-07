@@ -19,7 +19,7 @@
         <!-- predict -->
         <div class="predict-match">
             <%- include('partials/predict', { match: matches[i] }); -%>
-            <% if (new Date(matches[i].time) - 3600000 < new Date()) { %>
+            <% if (new Date(matches[i].time + "+03:00") - 3600000 < new Date()) { %>
                 <div class="tahminleri-gör-buton"> <a>Tahmin Et</a> </div>
             <% } else { %>
                 <div class="tahmin-et-buton"> <a href=<%= "/tahmin-et/" + matches[i].id %>>Tahmin Et</a> </div>
@@ -30,7 +30,7 @@
         <div class="tiny-predict-match">
             <%- include('partials/tiny-predict', { match: matches[i] }); -%>
             <div class="tiny-predict-match-second-row">
-                <% if (new Date(matches[i].time) - 3600000 < new Date()) { %>
+                <% if (new Date(matches[i].time + "+03:00") - 3600000 < new Date()) { %>
                     <div class="tahminleri-gör-buton"> <a>Tahmin Et</a> </div>
                 <% } else { %>
                     <div class="tahmin-et-buton"> <a href=<%= "/tahmin-et/" + matches[i].id %>>Tahmin Et</a> </div>

@@ -31,7 +31,7 @@ router.get("/tahmin-et/:match_id", async (req, res) => {
     }
     let match = await db_utils.getMatchById(match_id);
     match.time = match.time.split(" ").join("T");
-    if (new Date(match.time) - 3600000 < new Date()) {
+    if (new Date(match.time + "+03:00") - 3600000 < new Date()) {
         return res.render("message", { message: "Tahminler kapandı." });
     }
     res.render("tahmin-et-form", {
@@ -46,7 +46,7 @@ router.post("/tahmin-et/:match_id", async (req, res) => {
     }
     let match = await db_utils.getMatchById(req.params.match_id);
     match.time = match.time.split(" ").join("T");
-    if (new Date(match.time) - 3600000 < new Date()) {
+    if (new Date(match.time + "+03:00") - 3600000 < new Date()) {
         return res.render("message", { message: "Tahminler kapandı." });
     }
     let home_first = req.body.home_first_half || null;
