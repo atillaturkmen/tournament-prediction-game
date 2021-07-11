@@ -99,11 +99,6 @@ exports.getGuesses = async function (match_id) {
     return query("SELECT * FROM score_guess WHERE match_id = ?;", [match_id]);
 };
 
-// Get all guesses on a match
-exports.getGuessesOnMatch = async function (match_id) {
-    return query("SELECT * FROM score_guess WHERE match_id = ?;", [match_id]);
-};
-
 // Get all guesses a user has made
 exports.getUserGuesses = async function (username) {
     return query(`
