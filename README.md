@@ -18,5 +18,5 @@ Finally run `node app.js` in the project folder. Go to *localhost* in the web br
 ## Folder Layout:
 - db: Db model and db queries wrapped in js functions
 - public: Assets that are served directly to the client
-- routes: Express routers that handles GET and POST requests from different URL's.
+- routes: Express routers that handle GET and POST requests from different URL's.
 - views: HTML and EJS templates.
