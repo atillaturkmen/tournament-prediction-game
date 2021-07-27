@@ -1,6 +1,5 @@
 // These two have to be in all router files
 const express = require("express"); // import express
-const { subtractPoint } = require("../db/db-utils");
 const router = express.Router();
 
 const db_utils = require("../db/db-utils"); // import our database utility functions
@@ -39,9 +38,8 @@ router.get("/admin/tournament", async (req, res) => {
 
 router.get("/admin/match", async (req, res) => {
     Promise.all([db_utils.getRowCount("match"), db_utils.getAllTournaments(), db_utils.getAllTeams()]).then((values) => {
-        let matchCount = values[0];
         res.render("admin/match", {
-            matchCount: matchCount,
+            matchCount: values[0],
             tournaments: JSON.stringify(values[1]),
             teams: JSON.stringify(values[2]),
         });
@@ -54,9 +52,8 @@ router.get("/admin/match/:match_id", async (req, res) => {
         return res.render("message", { message: "This match id is not in database." });
     }
     Promise.all([db_utils.getRowCount("match"), db_utils.getAllTournaments(), db_utils.getAllTeams(), db_utils.getMatchById(match_id)]).then((values) => {
-        let matchCount = values[0];
         res.render("admin/match", {
-            matchCount: matchCount,
+            matchCount: values[0],
             tournaments: JSON.stringify(values[1]),
             teams: JSON.stringify(values[2]),
             match: values[3],

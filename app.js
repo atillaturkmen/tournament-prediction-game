@@ -28,8 +28,7 @@ app.use(session({
         // Session TTL in milliseconds
         ttl: 86400000 * 30, // 30 days
         // (optional) Adjusts the cleanup timer in milliseconds for deleting expired session rows.
-        // Default is 5 minutes.
-        cleanupInterval: 86400000
+        cleanupInterval: 86400000,
     }),
     secret: process.env.secret,
     resave: false,
